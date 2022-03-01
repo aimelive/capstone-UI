@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="description" content="Aimelive | Freelance Developer | Official Biography website">
+    <meta name="keywords" content="Aimelive, Biography, Awesome websites">
+    <meta name="author" content="Aime Ndayambaje">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="titleBar"></title>
+    <link rel="icon" href="images/Rectangle 21.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/blog.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="script.js">
+    </script>
+</head>
+
+<body>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <div class="navbar">
+        <table>
+            <tr>
+                <td><img src="images/Rectangle 21.png" id="logo" width="50px" /></td>
+                <td><label id="logo_text">AimeLive</label></td>
+            </tr>
+        </table>
+        <nav class="menu" id="menuBar">
+            <a href="login.html" id="admin_login">login</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contacts</a>
+            <a href="blog.html" style="background-color: white;color: black;">News</a>
+            <a href="index.html">Home</a>
+        </nav>
+
+    </div>
+    <div class="header">
+        <h2>Aimelive - Blog Posts</h2>
+    </div>
+
+    <div class="row blog_body">
+        <div class="leftcolumn">
+            <div class="card">
+
+
+                <div class="cardimg story">
+                    <img id="photo" />
+
+                    <p class="title" id="title"></p>
+
+                    <h5 id="category"></h5>
+                    <p id="blogBody"> </p>
+
+                    <h5>Posted on, <span id="date"> </span></h5>
+                </div>
+                <h3>Leave a comment </h3>
+                <div class="cardimg" style="height: auto;">
+                    <div class="comment-section" id="comment-section">
+                        <div class="comment-container">
+                            <div class="profileAvatar">
+                                <img src="images/Rectangle 21.png" height="50px" width="50px">
+                            </div>
+                            <div class="comment-data">
+                                <form action="javascript:void(0)" id="com-form" name="commentForm" class="commentForm">
+                                    <label for="name">
+                                            <input type="text" name="yourName" id="your-name" placeholder="Your name..." required />
+                                    </label>
+                                    <label for="email">
+                                        <input type="email" name="yourEmail" id="your-email" placeholder="Your email..." required />
+                                    </label>
+
+                                    <label for="your-comment">
+                                            <textarea name="yourComment" id="your-comment" cols="50" rows="10" maxlength="500" placeholder="Your comment..." required></textarea>
+                                    </label>
+
+                                    <div id="comment-footer">
+                                        <p id="char-indicator"><span id="characters-left">500</span>/500</p>
+                                        <button type="submit" id="send-button">Comment</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="rightcolumn">
+            <div class="card">
+                <h2>About Me</h2>
+                <img src="images/IMG-20220113-WA0012-modified.png" class="cardimg" />
+                <p>Freelance Developer - Web Specialist - IT Proffesional - Software Management</p>
+            </div>
+            <div class="card">
+                <h3>Popular Post</h3>
+                <img src="images/198807056_1350758038653763_5653275032777728992_n.jpg" class="cardimg" />
+                <p>Another thing to know about Aimelive is that he hustled for a while since 2018 in journalism media industry, </p>
+                <br>
+                <img src="images/rwanda-kagame.jpeg" class="cardimg" />
+                <p>Another thing to know about Aimelive is that he hustled for a while since 2018 in journalism media industry, </p>
+                <br>
+                <img src="images/198807056_1350758038653763_5653275032777728992_n.jpg" class="cardimg" />
+                <p>Another thing to know about Aimelive is that he hustled for a while since 2018 in journalism media industry, </p>
+
+            </div>
+            <div class="card follow">
+                <h3>Follow Me</h3>
+                <a href="#" class="fa fa-facebook"></a>
+                <a href="#" class="fa fa-whatsapp"></a>
+                <a href="#" class="fa fa-linkedin"></a>
+                <a href="#" class="fa fa-twitter"></a>
+                <a href="#" class="fa fa-slack"></a>
+                <a href="#" class="fa fa-github"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p class="label">&copy; Copright; Aimelive 2022 <a href="">Terms and Conditions here</a></p>
+    </div>
+    <script>
+        const searchID = location.search.substring(1);
+        //console.log(searchID);
+        const firebaseConfig = {
+            apiKey: "AIzaSyDPJNXs39XXwg8rZzatFSEVzHnwbdAo6-4",
+            authDomain: "aimelive-capstone.firebaseapp.com",
+            projectId: "aimelive-capstone",
+            storageBucket: "aimelive-capstone.appspot.com",
+            messagingSenderId: "319177014265",
+            appId: "1:319177014265:web:bd5d6f830678f33f6c9b28"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = app.firestore();
+
+
+
+
+        //adding comment into firebase
+
+        const comment = document.querySelector('.commentForm');
+        comment.addEventListener('submit', (e) => {
+            e.preventDefault()
+
+            db.collection("comments").add({
+                    name: comment.yourName.value,
+                    email: comment.yourEmail.value,
+                    comment: comment.yourComment.value,
+                    postID: searchID
+                })
+                .then((docRef) => {
+                    console.log("New comment added with the ID", docRef.id)
+                })
+                .catch((error) => {
+                    console.error("Error adding the comment: ", error);
+                });
+
+        })
+
+
+        //ending with adding data into database
+
+
+
+
+        var docRef = db.collection("blogs").doc(searchID);
+
+        docRef.get().then((doc) => {
+            if (doc.exists) {
+
+                document.getElementById("titleBar").innerHTML = doc.data().article;
+                document.getElementById("title").innerHTML = doc.data().article;
+                document.getElementById("category").innerHTML = doc.data().category;
+                document.getElementById("blogBody").innerHTML = doc.data().title;
+                document.getElementById("date").innerHTML = doc.data().date.toDate().toDateString();
+                const image = document.getElementById("photo");
+                image.setAttribute("src", doc.data().photo);
+                //console.log("Document data:", doc.data());
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+        });
+    </script>
+</body>
+
+</html>

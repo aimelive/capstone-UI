@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin - Dashboard [Aimelive]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="description" content="Aimelive | Freelance Developer | Official Biography website">
+    <meta name="keywords" content="Aimelive, Biography, Awesome websites">
+    <meta name="author" content="Aime Ndayambaje">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="Rectangle 21.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
+
+</head>
+
+<body>
+
+    <div class="header">
+
+        <label id="logo_text">AimeLive</label>
+        <div id="styledCard">
+            <img src="Rectangle 21.png" onclick="showHidden()" id="styledImage" class="styledImage" />
+            <div id="dropDownList" class="dropDown">
+                <a href="#"><i class="fa fa-user"></i> &nbsp; Profile</a>
+                <a href="#"><i class="fa fa-gear"> </i> &nbsp; Account Settings</a>
+                <a href="#"><i class="fa fa-bar-chart"> </i> &nbsp; Analytics</a>
+                <a href="#"><i class="fa fa-power-off"></i> &nbsp; Log Out</a>
+            </div>
+
+        </div>
+        <script>
+            function showHidden() {
+                document.getElementById("dropDownList").style.display = "block";
+            }
+
+            // Close the dropdown if the user clicks outside of it
+            window.onclick = function(event) {
+                if (!event.target.matches('.styledImage')) {
+                    var dropdowns = document.getElementsByClassName("dropDown");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.style.display == "block") {
+                            openDropdown.style.display = "none";
+                        }
+                    }
+                }
+            }
+        </script>
+    </div>
+    <nav class="sidebar">
+        <a href="dashboard.html"><i class="fa fa-home"></i> Home</a>
+        <a href="faq.html"><i class="fa fa-envelope"></i> Messages</a>
+        <a href="#" style="background-color: white;"><i class="fa fa-newspaper-o"></i> Articles</a>
+        <a href="comments.html"><i class="fa fa-comments-o"></i> Comments</a>
+        <a href="#"><i class="fa fa-bar-chart"></i> Analytics</a>
+        <a href="#"> <i class="fa fa-gear"></i> Account Settings</a>
+    </nav>
+
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+    <div class="dashboard">
+        <a href="news_article.html" class="back"><i class="fa fa-arrow-circle-o-left"></i> Back</a>
+
+
+
+        <div class="addPost">
+            <center>
+                <img src="../images/images.png" width="50px" style="border-radius: 50%;" />
+                <h1>Add Post <span style="color: #ECB22E;">@Aimelive</span> here </h1>
+            </center>
+            <form method="post" class="add-post-to-database" id="addPostFirebase" novalidate>
+                <div class="row">
+                    <div class="labelClass">
+                        <label for="title">Enter a title: </label>
+                    </div>
+                    <div class="inputClass">
+                        <input type="text" name="title" placeholder="Blog title.." required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="labelClass">
+                        <label for="category">Choose category: </label>
+                    </div>
+                    <div class="inputClass">
+                        <select id="category" name="category" required>
+                            <option value="">Select a category</option>
+                            <option value="Motivation">Motivation</option>
+                            <option value="Careers">Careers</option>
+                            <option value="Projects">Projects</option>
+                            <option value="Personal blog">Personal blog</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="labelClass">
+                        <label for="Preview">Write a preview: </label>
+                    </div>
+                    <div class="inputClass">
+                        <textarea name="preview" placeholder="Write a blog preview" style="height:100px;resize: none;font-family:sedan sc;font-size:19px" required></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="labelClass">
+                        <label for="blog">Write a blog: </label>
+                    </div>
+
+                    <div class="inputClass">
+                        <textarea name="blog" id="mytextarea" placeholder="Write a blog..." style="height:300px;resize:none;font-family:sedan sc;font-size:18px" required></textarea>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="labelClass">
+                        <label for="image">Featured Photo: </label>
+                    </div>
+                    <div class="inputClass">
+                        <input type="file" name="image" placeholder="Choose a file to open.." style="resize:none">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <input type="reset" value="Clear">
+                    <input type="button" value="Save">
+                    <input type="submit" value="Post">
+                </div>
+            </form>
+            <script>
+                const form = document.querySelector('.add-post-to-database');
+
+                const firebaseConfig = {
+                    apiKey: "AIzaSyDPJNXs39XXwg8rZzatFSEVzHnwbdAo6-4",
+                    authDomain: "aimelive-capstone.firebaseapp.com",
+                    projectId: "aimelive-capstone",
+                    storageBucket: "aimelive-capstone.appspot.com",
+                    messagingSenderId: "319177014265",
+                    appId: "1:319177014265:web:bd5d6f830678f33f6c9b28"
+                };
+
+                const app = firebase.initializeApp(firebaseConfig);
+
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault()
+                    const image = form.image.files[0];
+                    const photoName = image.name;
+
+                    var storageRef = app.storage().ref('uploads/' + photoName);
+
+                    var uploadTask = storageRef.put(image);
+                    uploadTask.on('state_changed', function(snapshot) {
+
+                        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+
+                        console.log("upload is " + progress + " done");
+                    }, function(error) {
+
+                        console.log(error)
+                    }, function() {
+
+                        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                            const db = app.firestore()
+
+                            db.collection("blogs").add({
+
+                                    article: form.title.value,
+                                    category: form.category.value,
+                                    photo: downloadURL,
+                                    preview: form.preview.value,
+                                    title: form.blog.value,
+                                    date: new Date()
+                                })
+                                .then((docRef) => {
+                                    alert("New blog Added Successfully")
+                                    console.log("New Article Added Successfully with the ID", docRef.id)
+                                })
+                                .catch((error) => {
+                                    console.error("Error adding document: ", error);
+                                });
+
+                        })
+                    })
+                })
+            </script>
+        </div>
+
+    </div>
+    <script>
+        CKEDITOR.replace("mytextarea");
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin - Dashboard [Aimelive]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="description" content="Aimelive | Freelance Developer | Official Biography website">
+    <meta name="keywords" content="Aimelive, Biography, Awesome websites">
+    <meta name="author" content="Aime Ndayambaje">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="Rectangle 21.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="header">
+        <label id="logo_text">AimeLive</label>
+        <div id="styledCard">
+            <img src="Rectangle 21.png" onclick="showHidden()" id="styledImage" class="styledImage" />
+            <div id="dropDownList" class="dropDown">
+                <a href="#"><i class="fa fa-user"></i> &nbsp; Profile</a>
+                <a href="#"><i class="fa fa-gear"> </i> &nbsp; Account Settings</a>
+                <a href="#"><i class="fa fa-bar-chart"> </i> &nbsp; Analytics</a>
+                <a href="#"><i class="fa fa-power-off"></i> &nbsp; Log Out</a>
+            </div>
+
+        </div>
+        <script>
+            function showHidden() {
+                document.getElementById("dropDownList").style.display = "block";
+            }
+
+            // Close the dropdown if the user clicks outside of it
+            window.onclick = function(event) {
+                if (!event.target.matches('.styledImage')) {
+                    var dropdowns = document.getElementsByClassName("dropDown");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.style.display == "block") {
+                            openDropdown.style.display = "none";
+                        }
+                    }
+                }
+            }
+        </script>
+    </div>
+    <nav class="sidebar">
+        <a href="dashboard.html"><i class="fa fa-home"></i> Home</a>
+        <a href="faq.html"><i class="fa fa-envelope"></i> Messages</a>
+        <a href="news_article.html"><i class="fa fa-newspaper-o"></i> Articles</a>
+        <a href="#" style="background-color: white;"><i class="fa fa-comments-o"></i> Comments</a>
+        <a href="#"><i class="fa fa-bar-chart"></i> Analytics</a>
+        <a href="#"> <i class="fa fa-gear"></i> Account Settings</a>
+    </nav>
+
+
+
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDPJNXs39XXwg8rZzatFSEVzHnwbdAo6-4",
+            authDomain: "aimelive-capstone.firebaseapp.com",
+            projectId: "aimelive-capstone",
+            storageBucket: "aimelive-capstone.appspot.com",
+            messagingSenderId: "319177014265",
+            appId: "1:319177014265:web:bd5d6f830678f33f6c9b28"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = app.firestore()
+
+
+        database.collection("comments").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                //console.log(`${doc.id} => ${doc.data()}`);
+                const dataComment = doc.data();
+                console.log(dataComment);
+                const commentID = doc.id;
+                const postID = dataComment.postID;
+                const name = dataComment.name;
+                const email = dataComment.email;
+                const comment = dataComment.comment;
+                getComment(name, email, comment, commentID, postID)
+
+            });
+        });
+
+        function getComment(name, email, comment, commentID, postID) {
+            const getcom = document.getElementById("articles");
+            const commentRow = document.createElement("tr");
+            const container = `<td>1 </td>
+                <td>${postID}</td>
+                <td>${comment} </td>
+                <td>${name}</td>
+                <td>${email} </td>
+                <td>Public </td>
+                <td><a href="?${commentID}"><i class="fa fa-reply"></i></a> &nbsp;<a href="?${commentID}"> <i class="fa fa-trash-o"></i></a></td>`
+            commentRow.innerHTML = container;
+            getcom.appendChild(commentRow);
+        }
+    </script>
+
+
+
+
+
+    <div class="dashboard">
+        <h1>Comments Management Board </h1>
+        <table id="articles">
+            <tr>
+
+                <th>No. </th>
+                <th>Article </th>
+                <th>Comment</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Manage</th>
+            </tr>
+        </table>
+        <center>
+            <div>
+                <a href="#" class="a"> <i class="fa fa-plus"></i> Old comments </a>
+            </div>
+        </center>
+
+    </div>
+</body>
+
+</html>

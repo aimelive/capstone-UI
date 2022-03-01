@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin - Dashboard [Aimelive]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="description" content="Aimelive | Freelance Developer | Official Biography website">
+    <meta name="keywords" content="Aimelive, Biography, Awesome websites">
+    <meta name="author" content="Aime Ndayambaje">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="Rectangle 21.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="header">
+        <label id="logo_text">AimeLive</label>
+        <div id="styledCard">
+            <img src="Rectangle 21.png" onclick="showHidden()" id="styledImage" class="styledImage" />
+            <div id="dropDownList" class="dropDown">
+                <a href="#"><i class="fa fa-user"></i> &nbsp; Profile</a>
+                <a href="#"><i class="fa fa-gear"> </i> &nbsp; Account Settings</a>
+                <a href="#"><i class="fa fa-bar-chart"> </i> &nbsp; Analytics</a>
+                <a href="#"><i class="fa fa-power-off"></i> &nbsp; Log Out</a>
+            </div>
+
+        </div>
+        <script>
+            function showHidden() {
+                document.getElementById("dropDownList").style.display = "block";
+            }
+
+            // Close the dropdown if the user clicks outside of it
+            window.onclick = function(event) {
+                if (!event.target.matches('.styledImage')) {
+                    var dropdowns = document.getElementsByClassName("dropDown");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.style.display == "block") {
+                            openDropdown.style.display = "none";
+                        }
+                    }
+                }
+            }
+        </script>
+    </div>
+    <nav class="sidebar">
+        <a href="dashboard.html"><i class="fa fa-home"></i> Home</a>
+        <a href="#" style="background-color: white;"><i class="fa fa-envelope"></i> Messages</a>
+        <a href="news_article.html"><i class="fa fa-newspaper-o"></i> Articles</a>
+        <a href="comments.html"><i class="fa fa-comments-o"></i> Comments</a>
+        <a href="#"><i class="fa fa-bar-chart"></i> Analytics</a>
+        <a href="#"> <i class="fa fa-gear"></i> Account Settings</a>
+    </nav>
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDPJNXs39XXwg8rZzatFSEVzHnwbdAo6-4",
+            authDomain: "aimelive-capstone.firebaseapp.com",
+            projectId: "aimelive-capstone",
+            storageBucket: "aimelive-capstone.appspot.com",
+            messagingSenderId: "319177014265",
+            appId: "1:319177014265:web:bd5d6f830678f33f6c9b28"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = app.firestore()
+
+
+        database.collection("queries").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                //console.log(`${doc.id} => ${doc.data()}`);
+                const dataMessage = doc.data();
+                console.log(dataMessage);
+                const msgID = doc.id;
+                const name = dataMessage.name;
+                const email = dataMessage.email;
+                const message = dataMessage.message;
+                getMessage(name, email, message, msgID)
+
+            });
+        });
+
+        function getMessage(name, email, message, msgID) {
+            const getM = document.getElementById("getM");
+            const faqs = document.createElement("div");
+            faqs.classList.add("faqs");
+            const container = `<img src="images/avatar.png" height="50px" width="50px" style="float: left;position: relative;top:10px">
+            <p style="color: #3299F9;"><b><u>${name}</u></b> (${email})</p>
+            <p>${message}</p>
+            <button id="ans"><i class="fa fa-reply"></i> Answer</button>
+            <button id="ign"><i class="fa fa-trash"></i> Ignore</button>`
+            faqs.innerHTML = container;
+            getM.appendChild(faqs);
+        }
+    </script>
+
+    <div class="dashboard">
+        <h1>Recently Asked Questions/Messages: </h1>
+        <center>
+            <a style="color: #3299F9;text-decoration: underline;cursor: pointer;"> View answered queries </a>&nbsp;&nbsp;&nbsp;
+            <a style="color: #EA6767;text-decoration: underline; cursor: pointer;"> View unanswered queries </a>
+        </center>
+        <div id="getM">
+
+        </div>
+    </div>
+</body>
+
+</html>

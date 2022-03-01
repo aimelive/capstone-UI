@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin - Dashboard [Aimelive]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="description" content="Aimelive | Freelance Developer | Official Biography website">
+    <meta name="keywords" content="Aimelive, Biography, Awesome websites">
+    <meta name="author" content="Aime Ndayambaje">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="Rectangle 21.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="header">
+        <span class="humberg" onclick="openSideNav()"> <i class="fa fa-bars" aria-hidden="true"></i></span>
+        <label id="logo_text">AimeLive</label>
+        <div id="styledCard">
+            <img src="Rectangle 21.png" onclick="showHidden()" id="styledImage" class="styledImage" />
+            <div id="dropDownList" class="dropDown">
+                <a href="#"><i class="fa fa-user"></i> &nbsp; Profile</a>
+                <a href="#"><i class="fa fa-gear"> </i> &nbsp; Account Settings</a>
+                <a href="#"><i class="fa fa-bar-chart"> </i> &nbsp; Analytics</a>
+                <a href="../login.html"><i class="fa fa-power-off"></i> &nbsp; Log Out</a>
+            </div>
+
+        </div>
+        <script>
+            function showHidden() {
+                document.getElementById("dropDownList").style.display = "block";
+            }
+
+            function openSideNav() {
+                document.getElementById("sidebar").style.display = "block";
+                document.getElementById("sidebar").style.top = "-25px";
+            }
+
+            // Close the dropdown if the user clicks outside of it
+            window.onclick = function(event) {
+                if (!event.target.matches('.styledImage')) {
+                    var dropdowns = document.getElementsByClassName("dropDown");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.style.display == "block") {
+                            openDropdown.style.display = "none";
+                        }
+                    }
+                }
+                if (!event.target.matches('.humberg')) {
+                    var sidebars = document.getElementsByClassName("sidebar");
+                    var i;
+                    for (i = 0; i < sidebars.length; i++) {
+                        var abc = sidebars[i];
+                        if (abc.style.display == "block") {
+                            abc.style.display = "none";
+                        }
+                    }
+                }
+            }
+        </script>
+
+    </div>
+    <nav class="sidebar" id="sidebar">
+        <a href="#" style="background-color: white;"><i class="fa fa-home"></i> Home</a>
+        <a href="faq.html"><i class="fa fa-envelope"></i> Messages</a>
+        <a href="news_article.html"><i class="fa fa-newspaper-o"></i> Articles</a>
+        <a href="comments.html"><i class="fa fa-comments-o"></i> Comments</a>
+        <a href="#"><i class="fa fa-bar-chart"></i> Analytics</a>
+        <a href="#"> <i class="fa fa-gear"></i> Account Settings</a>
+    </nav>
+    <div class="dashboard">
+        <div class="animationP">
+            <h1 class="animateHeading">WELCOME TO ADMIN DASHBOARD </h1>
+            <p class="animateText">You’re successfully logged in because you are allowed to manage everything on this website. </p>
+        </div>
+        <div id="overviewCard">
+            <div id="dashCard">
+                <i class="fa fa-newspaper-o"></i>
+                <h2>90</h2>
+                <span>Posts </span>
+            </div>
+            <div id="dashCard" style="color:#2EB67D;border-color:#2EB67D">
+                <i class="fa fa-comments-o"></i>
+                <h2>15</h2>
+                <span>Comments</span>
+            </div>
+            <div id="dashCard" style="color:#3299F9;border-color:#3299F9">
+                <i class="fa fa-envelope"></i>
+                <h2>2</h2>
+                <span>New messages</span>
+            </div>
+            <div id="dashCard" style="color:#EA6767;border-color:#EA6767">
+                <i class="fa fa-edit"></i>
+                <h2>7</h2>
+                <span>Drafts </span>
+            </div>
+        </div>
+        <p>Recent Posts: </p>
+        <div class="container">
+            <div class="card">
+                <img src="images/259876262_273615128057795_12441334990616548_n.jpg" />
+                <span>2022: Aimelive nominated as the best developer in the world (PROJECTS) </span>
+            </div>
+            <div class="card">
+                <img src="images/198807056_1350758038653763_5653275032777728992_n.jpg" />
+                <span>2022: Aimelive nominated as the best developer in the world</span>
+            </div>
+            <div class="card">
+                <img src="images/259876262_273615128057795_12441334990616548_n.jpg" />
+                <span>2022: Aimelive nominated as the best developer in the world</span>
+            </div>
+            <div class="card">
+                <img src="images/259876262_273615128057795_12441334990616548_n.jpg" />
+                <span>2022: Aimelive nominated as the best developer in the world</span>
+            </div>
+        </div>
+        <p>Recently Asked Questions: </p>
+        <div class="faqs">
+            <img src="images/avatar.png" height="50px" width="50px" style="float: left;position: relative;top:10px">
+            <p style="color: #3299F9;"><b><u>Bwiza Claire</u></b> (nyiramwizaclaire456@gmail.com)</p>
+            <p>Hi, @aimelive, How are you doing? Please tell me the price for commercial website, sure.</p>
+            <button id="ans"><i class="fa fa-reply"></i> Answer</button>
+            <button id="ign"><i class="fa fa-trash"></i> Ignore</button>
+
+        </div>
+        <div class="faqs">
+            <img src="images/avatar.png" height="50px" width="50px" style="float: left;position: relative;top:10px">
+            <p style="color: #3299F9;"><b><u>MIZERO Christian </u></b> (mizerochris@gmail.com)</p>
+            <p>Hello Aime! I need an awesome portfolio website for my biography before this March, can you? I will give 200$ if found that it is very interactive, awesome and attractive.</p>
+            <button id="ans"><i class="fa fa-reply"></i> Answer</button>
+            <button id="ign"><i class="fa fa-trash"></i> Ignore</button>
+
+        </div>
+        <p style="color: #3299F9;text-align: center;text-decoration: underline;"> Load more...</p>
+    </div>
+</body>
+
+</html>

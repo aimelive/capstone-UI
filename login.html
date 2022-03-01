@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Aimelive | Freelance Developer | Official Biography website">
+    <meta name="keywords" content="Aimelive, Biography, Awesome websites">
+    <meta name="author" content="Aime Ndayambaje">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aimelive - Login Page </title>
+    <link rel="icon" href="images/Rectangle 21.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+</head>
+
+<body>
+    <section class="header">
+        <div>
+            <a href="index.html">
+                <table>
+                    <tr>
+                        <td><img src="images/Rectangle 21.png" id="logo" width="50px" /></td>
+                        <td><label id="logo_text">AimeLive</label></td>
+                    </tr>
+                </table>
+            </a>
+
+            <ul>
+                <li><a href="index.html">Home</a> </li>
+                <li><a href="blog.html">News</a> </li>
+                <li><a href="contact.html">Contacts</a> </li>
+                <li><a href="about.html">About</a> </li>
+                <li><a href="#" id="admin_login">login</a> </li>
+            </ul>
+        </div>
+    </section>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
+
+    <center>
+        <div class="login">
+            <img src="images/Rectangle 21.png" id="logo" width="80px" />
+            <h2 id="animateHeading">Hey Admin, Welcome</h2>
+            <form method="post" class="login_form">
+                <label>E-mail  </label><br>
+                <input type="email" name="email" placeholder="Email or Phone number" class="input" required />
+                <br>
+                <label>Password </label><br>
+                <input type="password" name="password" placeholder="Enter Password" autocomplete="current-password" class="input" required/>
+                <br>
+                <input type="submit" Value="Sign in" placeholder="Email or Phone number" class="input" id="signin" /><br>
+
+            </form>
+            <p>Don't have an Account? <a href="#"> Sign up now </a></p>
+        </div>
+    </center>
+
+    <script>
+        const form = document.querySelector('.login_form');
+        const firebaseConfig = {
+            apiKey: "AIzaSyDPJNXs39XXwg8rZzatFSEVzHnwbdAo6-4",
+            authDomain: "aimelive-capstone.firebaseapp.com",
+            projectId: "aimelive-capstone",
+            storageBucket: "aimelive-capstone.appspot.com",
+            messagingSenderId: "319177014265",
+            appId: "1:319177014265:web:bd5d6f830678f33f6c9b28"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        form.addEventListener('submit', (e) => {
+            e.preventDefault()
+
+            firebase.auth().signInWithEmailAndPassword(form.email.value, form.password.value)
+                .then((userCredential) => {
+                    console.log("Logged in")
+                    alert("Let's Go, Click OK to continue ")
+                    window.location.href = 'admin/dashboard.html'
+                })
+                .catch((error) => {
+                    alert("Wrong username or Password, Please contact admin for help")
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                });
+        })
+    </script>
+    <center>
+        <p class="label">&copy; Copright; Aimelive 2022 <a href="">Terms and Conditions here</a></p>
+    </center>
+</body>
+
+</html>

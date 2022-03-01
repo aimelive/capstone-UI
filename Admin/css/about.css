@@ -1,0 +1,107 @@
+.leftCol {
+    float: left;
+    width: 25%;
+    margin: 0px;
+}
+
+.middle {
+    float: left;
+    width: 40%;
+}
+
+.rightCol {
+    float: left;
+    width: 25%;
+}
+
+.row {
+    display: inline-block;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.middle a {
+    font-size: 18px;
+    margin: 5px;
+    color: #ECB22E;
+    text-decoration: none;
+}
+
+.middle a:hover {
+    color: #3299F9;
+}
+
+.middle .leave_a_comment {
+    color: gray;
+    font-size: 15px;
+    float: right;
+}
+
+.middle .bio {
+    font-family: Sedan SC;
+}
+
+.middle h2 {
+    text-decoration: underline;
+    font-family: Sedan SC;
+}
+
+body .middle .bio {
+    text-align: justify;
+}
+
+.middle,
+.rightCol {
+    margin: 10px;
+}
+
+.rightCol .rightCard {
+    background-color: white;
+    border: 1px solid #ECB22E;
+    margin: 20px 5px;
+    margin-bottom: 0px;
+}
+
+.rightCol .rightCard p {
+    text-align: center;
+    color: #ECB22E;
+    border: 1px solid #ECB22E;
+    border-left: none;
+    border-right: none;
+    padding: 12px;
+    font-weight: bold;
+}
+
+.rightCol .rightCard ol li {
+    list-style-type: none;
+    padding: 4px 0px;
+}
+
+.rightCol .rightCard ol li a {
+    text-decoration: none;
+    color: black;
+}
+
+@media screen and (max-width: 800px) {
+    .leftCol,
+    .rightCol,
+    .middle {
+        width: 100%;
+        padding: 0;
+    }
+    .row {
+        display: flex;
+    }
+}
+
+@media only screen and (orientation: landscape) {
+    body .row {
+        margin-top: 80px;
+    }
+    .leftCol,
+    .rightCol {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 180px;
+    }
+}

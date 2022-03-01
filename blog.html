@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="description" content="Aimelive | Freelance Developer | Official Biography website">
+    <meta name="keywords" content="Aimelive, Biography, Awesome websites">
+    <meta name="author" content="Aime Ndayambaje">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aimelive - Blog Posts </title>
+    <link rel="icon" href="images/Rectangle 21.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/blog.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+    <div class="navbar">
+        <table>
+            <tr>
+                <td><img src="images/Rectangle 21.png" id="logo" width="50px" /></td>
+                <td><label id="logo_text">AimeLive</label></td>
+            </tr>
+        </table>
+        <nav class="menu" id="menuBar">
+            <a href="login.html" id="admin_login">login</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contacts</a>
+            <a href="blog.html" style="background-color: white;color: black;">News</a>
+            <a href="index.html">Home</a>
+        </nav>
+
+    </div>
+    <div class="header">
+        <h2>Aimelive - Blog Posts</h2>
+    </div>
+
+    <div class="row blog_body">
+        <div class="leftcolumn" id="leftCol">
+        </div>
+        <div class="rightcolumn">
+            <div class="card">
+                <h2>About Me</h2>
+                <img src="images/IMG-20220113-WA0012-modified.png" class="cardimg" />
+                <p>Freelance Developer - Web Specialist - IT Proffesional - Software Management</p>
+            </div>
+            <div class="card">
+                <h3>Popular Post</h3>
+                <img src="images/198807056_1350758038653763_5653275032777728992_n.jpg" class="cardimg" />
+                <p>Another thing to know about Aimelive is that he hustled for a while since 2018 in journalism media industry, </p>
+                <br>
+                <img src="images/rwanda-kagame.jpeg" class="cardimg" />
+                <p>Another thing to know about Aimelive is that he hustled for a while since 2018 in journalism media industry, </p>
+                <br>
+                <img src="images/198807056_1350758038653763_5653275032777728992_n.jpg" class="cardimg" />
+                <p>Another thing to know about Aimelive is that he hustled for a while since 2018 in journalism media industry, </p>
+
+            </div>
+            <div class="card follow">
+                <h3>Follow Me</h3>
+                <a href="#" class="fa fa-facebook"></a>
+                <a href="#" class="fa fa-whatsapp"></a>
+                <a href="#" class="fa fa-linkedin"></a>
+                <a href="#" class="fa fa-twitter"></a>
+                <a href="#" class="fa fa-slack"></a>
+                <a href="#" class="fa fa-github"></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p class="label">&copy; Copright; Aimelive 2022 <a href="">Terms and Conditions here</a></p>
+    </div>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDPJNXs39XXwg8rZzatFSEVzHnwbdAo6-4",
+            authDomain: "aimelive-capstone.firebaseapp.com",
+            projectId: "aimelive-capstone",
+            storageBucket: "aimelive-capstone.appspot.com",
+            messagingSenderId: "319177014265",
+            appId: "1:319177014265:web:bd5d6f830678f33f6c9b28"
+        };
+
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = app.firestore()
+
+
+        database.collection("blogs").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                //console.log(`${doc.id} => ${doc.data()}`);
+                const dataBlog = doc.data();
+                //console.log(dataBlog);
+                const blogID = doc.id;
+                const article = dataBlog.article;
+                const photo = dataBlog.photo;
+                const date = dataBlog.date;
+                const category = dataBlog.category;
+                getBlogs(article, photo, category, date, blogID)
+
+            });
+        });
+
+        function getBlogs(article, photo, category, date, blogID) {
+            const leftCol = document.getElementById("leftCol");
+            const card = document.createElement("div");
+            card.classList.add("card");
+            const container = `
+                <div class="cardimg toread">
+                    <img src="${photo}" />
+                    <h3>${category}</h3>
+                    <p>${article}&nbsp; <a href="read.html?${blogID}">read more</a></p> 
+                    <h5>Posted on, <span>${date.toDate().toDateString()}</span></h5>
+                </div>`
+            console.log(date);
+            card.innerHTML = container;
+            leftCol.appendChild(card);
+        }
+    </script>
+</body>
+
+</html>
