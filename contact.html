@@ -20,6 +20,8 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <section class="header">
         <div>
             <table>
@@ -49,11 +51,19 @@
             <center>
                 <img src="images/Rectangle 21.png" id="logo" width="50px" />
                 <h2><span style="color: #ECB22E;"> Reach  </span>out to <span style="color: #ECB22E;"> @Aimelive </span>here </h2>
-                <form method="post" class="reach-out">
-                    <input type="text" name="fullname" placeholder="Your name" required>
-                    <input type="email" name="youremail" placeholder="Your e-mail" required>
+                <form method="post" class="reach-out" name="rechout">
+                    <span class="errorMessage" id="errorName"></span>
+                    <input type="text" name="fullname" placeholder="Your name">
+
+                    <span class="errorMessage" id="errorEmail"></span>
+                    <input type="text" name="youremail" placeholder="Your e-mail" id="youremail">
+
                     <br>
-                    <textarea name="message" placeholder="Your message " cols="50" rows="15" required></textarea><br>
+                    <span class="errorMessage" id="errorMessage"></span>
+                    <textarea name="yourmessage" placeholder="Your message " cols="50" rows="15"></textarea>
+
+
+
                     <input type="submit" value="Send message" />
                 </form>
                 <p class="label">For further help please visit our <a href="">FAQs</a></p>
@@ -78,20 +88,60 @@
         message.addEventListener('submit', (e) => {
             e.preventDefault()
 
-            database.collection("queries").add({
-                    name: message.fullname.value,
-                    email: message.youremail.value,
-                    message: message.message.value
-                })
-                .then((docRef) => {
-                    window.location.href = 'message_successfully.html'
-                    console.log("New Article Added Successfully with the ID", docRef.id)
-                })
-                .catch((error) => {
-                    console.error("Error adding document: ", error);
-                });
+            if (formValidation()) {
+                database.collection("queries").add({
+                        name: message.fullname.value,
+                        email: message.youremail.value,
+                        message: message.yourmessage.value
+                    })
+                    .then((docRef) => {
+                        swal({
+                            text: "Message sent successfully!",
+                        }).then(() => {
+                            window.location.href = "message_successfully.html"
+                            console.log("New Article Added Successfully with the ID", docRef.id)
+                        })
+                    })
+                    .catch((error) => {
+                        console.error("Error adding document: ", error);
+                    });
+            }
 
-        })
+        });
+
+        function formValidation() {
+            let names = document.getElementById("errorName");
+            let emails = document.getElementById("errorEmail");
+            let messages = document.getElementById("errorMessage");
+            if (document.rechout.fullname.value == "") {
+                names.innerHTML = "Please provide your name!";
+                document.rechout.fullname.focus();
+                return false;
+            }
+            if (document.rechout.youremail.value == "") {
+                emails.innerHTML = "Please provide your Email!"
+                document.rechout.youremail.focus();
+                return false;
+            } else {
+                var emailID = document.getElementById("youremail").value;
+                atpos = emailID.indexOf("@");
+                dotpos = emailID.lastIndexOf(".");
+
+                if (atpos < 1 || (dotpos - atpos < 2)) {
+                    emails.innerHTML = "Incorret Email (@,.) are missing"
+                    document.rechout.youremail.focus();
+                    return false;
+
+                }
+
+            }
+            if (document.rechout.yourmessage.value == "") {
+                messages.innerHTML = "Please provide your Message or Queries! "
+                document.rechout.yourmessage.focus();
+                return false;
+            }
+            return (true);
+        }
     </script>
 
     <center>
