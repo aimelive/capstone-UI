@@ -48,7 +48,10 @@
                 <input type="text" name="email" placeholder="Email or Phone number" class="input" id="adminEmail" />
                 <br>
                 <label id="errorPassword">Password </label><br>
-                <input type="password" name="password" placeholder="Enter Password" autocomplete="current-password" class="input" />
+                <input type="password" name="password" placeholder="Enter Password" autocomplete="current-password" class="input" id="toggle-password" />
+                <br>
+                <label id="checkbox"><input type="checkbox" onclick="myFunction()"> &nbsp; Show Password</label>
+
                 <br>
                 <input type="submit" Value="Sign in" placeholder="Email or Phone number" class="input" id="signin" /><br>
 
@@ -59,6 +62,8 @@
 
     <script>
         const form = document.querySelector('.login_form');
+        let emails = document.getElementById("errorEmail");
+        let passwords = document.getElementById("errorPassword");
         const firebaseConfig = {
             apiKey: "AIzaSyDPJNXs39XXwg8rZzatFSEVzHnwbdAo6-4",
             authDomain: "aimelive-capstone.firebaseapp.com",
@@ -78,13 +83,20 @@
             if (formValidation()) {
                 firebase.auth().signInWithEmailAndPassword(form.email.value, form.password.value)
                     .then((userCredential) => {
-                        console.log("Logged in")
-                        alert("Let's Go, Click OK to continue ")
-                        location.href = 'Admin/dashboard.html'
+                        swal("Welcome Admin", "You're successfully logged in, Click OK to continue!", "success").then(() => {
+                            //console.log("Logge¬ød in")
+                            //alert("Let's Go, Click OK to continue ")
+                            location.href = 'Admin/dashboard.html'
+                        })
                     })
                     .catch((error) => {
-                        alert("Wrong username or Password, Please contact admin for help")
-                        form.reset();
+                        swal("Oops!", "Wrong Email or Paswword! Contact Admin for help! ", "error").then(() => {
+                                form.reset();
+                                form.email.focus();
+                                emails.innerHTML = "E-mail";
+                                passwords.innerHTML = "Password"
+                            })
+                            //alert("Wrong username or Password, Please contact admin for help")
                         var errorCode = error.code;
                         var errorMessage = error.message;
                     });
@@ -93,8 +105,7 @@
         });
 
         function formValidation() {
-            let emails = document.getElementById("errorEmail");
-            let passwords = document.getElementById("errorPassword");
+
 
             if (document.loginAdmin.email.value == "") {
                 emails.innerHTML = "Please provide your Email!"
@@ -130,6 +141,18 @@
 
 
             return (true);
+        }
+
+        function myFunction() {
+            var x = document.getElementById("toggle-password");
+
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+
+
         }
     </script>
     <center>

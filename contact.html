@@ -95,12 +95,10 @@
                         message: message.yourmessage.value
                     })
                     .then((docRef) => {
-                        swal({
-                            text: "Message sent successfully!",
-                        }).then(() => {
-                            window.location.href = "message_successfully.html"
-                            console.log("New Article Added Successfully with the ID", docRef.id)
-                        })
+
+                        window.location.href = "message_successfully.html"
+                        console.log("New Article Added Successfully with the ID", docRef.id)
+
                     })
                     .catch((error) => {
                         console.error("Error adding document: ", error);

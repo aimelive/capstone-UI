@@ -77,7 +77,7 @@
             </p>
             <div class="newsletter">
                 <div class="main-block">
-                    <h1> Sign Up to our Newsletter</h1>
+                    <h1> Stay in touch</h1>
                     <form method="post" name="signupNewsletter" action="javascript:void(0)">
                         <center>
                             <img src="images/subscribe-newsletter-icon-30-removebg-preview.png" width="20%" style="margin-bottom: 30px;" />
@@ -97,32 +97,6 @@
                             </div>
 
                         </div>
-                        <div class="grade-type">
-                            <h3>Rate Our Website</h3>
-                            <div>
-                                <input type="radio" value="none" id="radioOne" name="grade" checked/>
-                                <label for="radioOne" class="radio">Excellent</label>
-                            </div>
-                            <div>
-                                <input type="radio" value="none" id="radioTwo" name="grade" />
-                                <label for="radioTwo" class="radio">Very Good</label>
-                            </div>
-                            <div>
-                                <input type="radio" value="none" id="radioThree" name="grade" />
-                                <label for="radioThree" class="radio">Good</label>
-                            </div>
-                            <div>
-                                <input type="radio" value="none" id="radioFour" name="grade" />
-                                <label for="radioFour" class="radio">Bad</label>
-                            </div>
-                            <div>
-                                <input type="radio" value="none" id="radioFive" name="grade" />
-                                <label for="radioFive" class="radio">Very Bad</label>
-                            </div>
-                        </div>
-                        <h3>Please Comment on Your Rating</h3>
-                        <textarea rows="10" cols="40" name="rateMessage" maxlength="500"></textarea>
-                        <span id="char-indicator countChar" style="color: #666;font-size: 12px;float: right;"><span id="characters-left">500</span>/500</span>
                         <button type="submit">Submit</button>
                     </form>
                 </div>
@@ -161,27 +135,6 @@
     <center>
         <p class="label">&copy; Copright; Aimelive 2022 <a href="">Terms and Conditions here</a></p>
     </center>
-    <script>
-        window.onload = () => {
-
-            let charactersLeftIndicator = document.getElementById('characters-left');
-
-            signupNewsletter.rateMessage.addEventListener('input', () => {
-                setTimeout(() => {
-                    let charactersLeft = 500 - signupNewsletter.rateMessage.value.length;
-                    charactersLeftIndicator.innerText = charactersLeft;
-
-                    if (charactersLeft <= 5)
-                        charactersLeftIndicator.style.color = "#e60000";
-                    else if (charactersLeft <= 20)
-                        charactersLeftIndicator.style.color = "#ffa600";
-                    else
-                        charactersLeftIndicator.style.color = "#555555";
-                }, 50);
-            });
-
-        }
-    </script>
 </body>
 
 </html>
