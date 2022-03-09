@@ -36,7 +36,21 @@
             <a href="blog.html" style="background-color: white;color: black;">News</a>
             <a href="index.html">Home</a>
         </nav>
+        <a class="humberg" onclick="showNav()" id="humberg"><i class="fa fa-bars"></i></a>
+        <div class="mybodyhover" id="mybodyhover" onclick="closeNav()">
+        </div>
+        <nav class="mobileNav" id="mobileNav">
 
+            <i style="font-size:24px" class="fa" id="closeNav"><span onclick="closeNav()">&#xf00d;</span></i>
+            <a href="#">Home</a>
+            <a href="#">News</a>
+            <a href="#">About</a>
+            <a href="#">Contacts</a>
+            <a href="#">Login</a>
+
+
+
+        </nav>
     </div>
     <div class="header">
         <h2>Aimelive - Blog Posts</h2>
@@ -187,6 +201,21 @@
         }).catch((error) => {
             console.log("Error getting document:", error);
         });
+    </script>
+    <script>
+        let humberg = document.getElementById("humberg")
+        let navBar = document.getElementById("mobileNav")
+        let mybodyhover = document.getElementById("mybodyhover")
+
+        function showNav() {
+            navBar.style.width = "45%";
+            mybodyhover.style.display = "block"
+        }
+
+        function closeNav() {
+            navBar.style.width = 0
+            mybodyhover.style.display = "none"
+        }
     </script>
 </body>
 

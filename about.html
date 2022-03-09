@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <section class="header">
+    <section class="header navbar">
         <div>
             <table>
                 <tr>
@@ -33,7 +33,20 @@
                 <li><a href="#" style="background-color: white;color: black;">About</a> </li>
                 <li><a href="login.html" id="admin_login">login</a> </li>
             </ul>
-            <i class="fa fa-bars" id="humberg"></i>
+            <a class="humberg" onclick="showNav()" id="humberg"><i class="fa fa-bars"></i></a>
+            <div class="mybodyhover" id="mybodyhover" onclick="closeNav()"></div>
+            <nav class="mobileNav" id="mobileNav">
+
+                <i style="font-size:24px" class="fa" id="closeNav"><span onclick="closeNav()">&#xf00d;</span></i>
+                <a href="#">Home</a>
+                <a href="#">News</a>
+                <a href="#">About</a>
+                <a href="#">Contacts</a>
+                <a href="#">Login</a>
+
+
+
+            </nav>
         </div>
     </section>
     <div class="row">
@@ -135,6 +148,21 @@
     <center>
         <p class="label">&copy; Copright; Aimelive 2022 <a href="">Terms and Conditions here</a></p>
     </center>
+    <script>
+        let humberg = document.getElementById("humberg")
+        let navBar = document.getElementById("mobileNav")
+        let mybodyhover = document.getElementById("mybodyhover")
+
+        function showNav() {
+            navBar.style.width = "45%";
+            mybodyhover.style.display = "block"
+        }
+
+        function closeNav() {
+            navBar.style.width = 0
+            mybodyhover.style.display = "none"
+        }
+    </script>
 </body>
 
 </html>

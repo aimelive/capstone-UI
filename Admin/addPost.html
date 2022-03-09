@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
 
 
     <!--Summernote Editor-->
@@ -114,7 +117,7 @@
                         <label for="Preview">Write a preview: </label>
                     </div>
                     <div class="inputClass">
-                        <textarea name="preview" id="summernote" placeholder="Write a blog preview" style="height:100px;resize: none;font-family:sedan sc;font-size:19px" required></textarea>
+                        <textarea name="preview" id="summernote" placeholder="Write a blog preview" required></textarea>
                     </div>
                 </div>
                 <div class="row">
@@ -123,8 +126,16 @@
                     </div>
 
                     <div class="inputClass">
-                        <textarea name="blog" id="mytextarea" placeholder="Write a blog..." style="height:300px;resize:none;font-family:sedan sc;font-size:18px" required></textarea>
+                        <textarea name="blog" id="mytextarea" placeholder="Write a blog..." required></textarea>
 
+                    </div>
+                </div>
+                <div class="row" id="imagePreview">
+                    <div class="labelClass">
+                        <label for="image">Image Preview: </label>
+                    </div>
+                    <div class="inputClass" id="outputPreview">
+                        <img src="" id="outputImage" height="200px" />
                     </div>
                 </div>
                 <div class="row">
@@ -132,7 +143,7 @@
                         <label for="image">Featured Photo: </label>
                     </div>
                     <div class="inputClass">
-                        <input type="file" name="image" placeholder="Choose a file to open.." style="resize:none">
+                        <input type="file" name="image" onchange="previewFile()" style="resize: none;" id="inputFile" accept="image/*">
                     </div>
                 </div>
                 <br>
@@ -187,10 +198,16 @@
                                     date: new Date()
                                 })
                                 .then((docRef) => {
-                                    alert("New blog Added Successfully")
-                                    console.log("New Article Added Successfully with the ID", docRef.id)
+                                    //alert("New blog Added Successfully")
+                                    swal("Success", "New post added successfully!!!", "success").then(() => {
+                                            form.reset()
+                                        })
+                                        //console.log("New Article Added Successfully with the ID", docRef.id)
                                 })
                                 .catch((error) => {
+                                    swal("Oops!", "An error occured, We can't add Post", "error").then(() => {
+                                        //form.reset()
+                                    })
                                     console.error("Error adding document: ", error);
                                 });
 
@@ -201,6 +218,25 @@
                 $(document).ready(function() {
                     $('#summernote').summernote();
                 });
+
+                function previewFile() {
+                    var pre = document.getElementById("imagePreview").style
+                    var preview = document.querySelector('#outputImage');
+                    var file = document.querySelector('#inputFile').files[0];
+                    var reader = new FileReader();
+
+                    reader.onloadend = function() {
+                        preview.src = reader.result;
+                    }
+
+
+                    if (file) {
+                        reader.readAsDataURL(file);
+                        pre.display = "block"
+                    } else {
+                        swal("Oops", "Can't preview!!", "error")
+                    }
+                }
             </script>
         </div>
 
