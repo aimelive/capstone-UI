@@ -22,7 +22,7 @@
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <section class="header">
+    <section class="header navbar">
         <div>
             <table>
                 <tr>
@@ -37,7 +37,20 @@
                 <li><a href="about.html">About</a> </li>
                 <li><a href="login.html" id="admin_login">login</a> </li>
             </ul>
-            <i class="fa fa-bars" id="humberg"></i>
+            <a class="humberg" onclick="showNav()" id="humberg"><i class="fa fa-bars"></i></a>
+            <div class="mybodyhover" id="mybodyhover" onclick="closeNav()"></div>
+            <nav class="mobileNav" id="mobileNav">
+
+                <i style="font-size:24px" class="fa" id="closeNav"><span onclick="closeNav()">&#xf00d;</span></i>
+                <a href="#">Home</a>
+                <a href="#">News</a>
+                <a href="#">About</a>
+                <a href="#">Contacts</a>
+                <a href="#">Login</a>
+
+
+
+            </nav>
         </div>
     </section>
     <center>
@@ -95,12 +108,10 @@
                         message: message.yourmessage.value
                     })
                     .then((docRef) => {
-                        swal({
-                            text: "Message sent successfully!",
-                        }).then(() => {
-                            window.location.href = "message_successfully.html"
-                            console.log("New Article Added Successfully with the ID", docRef.id)
-                        })
+
+                        window.location.href = "message_successfully.html"
+                        console.log("New Article Added Successfully with the ID", docRef.id)
+
                     })
                     .catch((error) => {
                         console.error("Error adding document: ", error);
@@ -147,6 +158,21 @@
     <center>
         <p class="label">&copy; Copright; Aimelive 2022 <a href="">Terms and Conditions here</a></p>
     </center>
+    <script>
+        let humberg = document.getElementById("humberg")
+        let navBar = document.getElementById("mobileNav")
+        let mybodyhover = document.getElementById("mybodyhover")
+
+        function showNav() {
+            navBar.style.width = "45%";
+            mybodyhover.style.display = "block"
+        }
+
+        function closeNav() {
+            navBar.style.width = 0
+            mybodyhover.style.display = "none"
+        }
+    </script>
 </body>
 
 </html>

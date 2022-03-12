@@ -150,7 +150,8 @@ body .body {
 
 .newsletter h1,
 .newsletter h3,
-.newsletter input {
+.newsletter input,
+#checkbox input {
     padding: 0;
     margin: 0;
     outline: none;
@@ -224,69 +225,6 @@ body .body {
     border: solid 0px #cbc9c9;
     background: #666;
     color: #fff;
-}
-
-input[type=radio] {
-    display: none;
-}
-
-label.radio {
-    position: relative;
-    display: inline-block;
-    text-indent: 32px;
-    cursor: pointer;
-}
-
-label.radio:before {
-    content: "";
-    position: absolute;
-    left: 0;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    border: 0.5px solid #8ebf42;
-    background: #fff;
-}
-
-label.radio:after {
-    content: "";
-    position: absolute;
-    width: 8px;
-    height: 4px;
-    top: 5px;
-    left: 4px;
-    border-bottom: 3px solid #8ebf42;
-    border-left: 3px solid #8ebf42;
-    transform: rotate(-45deg);
-    opacity: 0;
-}
-
-input[type=radio]:checked+label:after {
-    opacity: 1;
-}
-
-.newsletter textarea {
-    width: 97%;
-    margin-bottom: 0px;
-    resize: none;
-    border-radius: 5px;
-    border: solid 1px #cbc9c9;
-    box-shadow: 1px 2px 5px rgba(0, 0, 0, .09);
-    background: #fff;
-    outline: none;
-    font-family: inherit;
-    padding: 8px;
-}
-
-.newsletter #countChar {
-    color: #666;
-    background-color: aqua;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
-.newsletter textarea:hover,
-.newsletter textarea:focus {
-    border: 1px solid #8ebf42;
 }
 
 .newsletter button {
@@ -399,6 +337,81 @@ body .login .login_form label {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+.navbar .humberg {
+    display: none;
+    position: absolute;
+    color: white;
+    top: 0;
+    right: 0;
+    padding: 12px;
+    margin: 8px;
+    font-weight: bold;
+    font-size: 25px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.navbar .humberg:hover {
+    text-shadow: 1px 1px 2px #ECB22E, 0 0 25px #ECB22E, 0 0 5px #ECB22E;
+}
+
+.navbar .mybodyhover {
+    background-color: rgba(0, 0, 0, 0.548);
+    width: 100%;
+    position: absolute;
+    z-index: 8;
+    left: 0px;
+    top: 0px;
+    height: 5000px;
+    display: none;
+    transition: display 0.5s;
+}
+
+.navbar .mobileNav {
+    position: absolute;
+    background-color: gray;
+    width: 0px;
+    height: 5000px;
+    right: 0px;
+    transition: 0.5s;
+    z-index: 10;
+}
+
+.navbar .mobileNav a {
+    text-align: center;
+    display: block;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 20px 0px;
+    transition: 0.5s;
+}
+
+.navbar .mobileNav #closeNav {
+    color: white;
+    padding: 20px;
+    width: 100%;
+}
+
+.navbar .mobileNav #closeNav span {
+    color: #ECB22E;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.navbar .mobileNav #closeNav span:hover {
+    color: rgb(85, 11, 11);
+    background-color: white;
+    padding: 12px;
+    border-radius: 4px;
+    box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.3);
+}
+
+.navbar .mobileNav a:hover {
+    background-color: #ECB22E;
+    border-radius: 50px 0px 0px 50px;
+}
+
 @media screen and (max-width: 800px) {
     body .login {
         width: 90%;
@@ -416,6 +429,15 @@ body .login .login_form label {
     body .login .login_form label {
         margin-left: 28px;
     }
+    .navbar .humberg {
+        display: block;
+    }
+    .navbar .mobileNav {
+        display: block;
+    }
+    body .header {
+        padding-top: 0px;
+    }
 }
 
 #signin,
@@ -425,10 +447,6 @@ body .login .login_form label {
 
 body #news_article {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-#humberg {
-    display: none;
 }
 
 body #news_article .card {
@@ -524,6 +542,15 @@ body .reachout .a1 {
     text-decoration: none;
 }
 
+#checkbox {
+    color: #ECB22E;
+    font-size: 15px;
+}
+
+#checkbox input {
+    border: 1px solid #ECB22E;
+}
+
 @media only screen and (orientation: landscape) {
     body .body {
         font-size: 200%;
@@ -534,5 +561,12 @@ body .reachout .a1 {
     }
     body .reachout .errorMessage {
         margin-left: 60px;
+    }
+    .navbar .mybodyhover {
+        width: 0px;
+        height: 0px;
+    }
+    .navbar .mobileNav {
+        display: none;
     }
 }
