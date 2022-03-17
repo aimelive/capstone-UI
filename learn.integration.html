@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Aimelive - Future Web Developer</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Hello, Everyone!!</h1>
+
+    <script>
+        fetch('https://my-brand-aimelive.herokuapp.com/api/v1/blogs')
+            .then(res => res.json())
+            .then(json => console.log(json))
+    </script>
+
+</body>
+
+</html>

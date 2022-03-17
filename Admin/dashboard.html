@@ -12,6 +12,9 @@
     <link rel="icon" href="Rectangle 21.png" type="image/x-icon">
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="./js/script.js"></script>
+
 </head>
 
 <body>
@@ -24,7 +27,7 @@
                 <a href="#"><i class="fa fa-user"></i> &nbsp; Profile</a>
                 <a href="#"><i class="fa fa-gear"> </i> &nbsp; Account Settings</a>
                 <a href="#"><i class="fa fa-bar-chart"> </i> &nbsp; Analytics</a>
-                <a href="../login.html"><i class="fa fa-power-off"></i> &nbsp; Log Out</a>
+                <a class="logout" onclick="logout()"><i class="fa fa-power-off"></i> &nbsp; Log Out</a>
             </div>
 
         </div>
@@ -137,6 +140,19 @@
         </div>
         <p style="color: #3299F9;text-align: center;text-decoration: underline;"> Load more...</p>
     </div>
+    <script>
+        function logout() {
+            swal({
+                title: 'Log out',
+                text: 'Are you sure you want to log out',
+                icon: 'warning',
+            }).then((deleteFunc) => {
+                localStorage.removeItem('token')
+                location.href = '../login.html'
+            })
+
+        }
+    </script>
 </body>
 
 </html>

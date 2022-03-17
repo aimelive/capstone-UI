@@ -1,0 +1,1 @@
+const server = 'https://my-brand-aimelive.herokuapp.com/api/v1/'
