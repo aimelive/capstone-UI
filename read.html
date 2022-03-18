@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="script.js">
     </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </head>
 
 <body>
@@ -30,7 +32,7 @@
             </tr>
         </table>
         <nav class="menu" id="menuBar">
-            <a href="login.html" id="admin_login">login</a>
+            <a onclick="login_out()" id="admin_login">Login</a>
             <a href="about.html">About</a>
             <a href="contact.html">Contacts</a>
             <a href="blog.html" style="background-color: white;color: black;">News</a>
@@ -217,6 +219,7 @@
             mybodyhover.style.display = "none"
         }
     </script>
+    <script src="server.js"></script>
 </body>
 
 </html>

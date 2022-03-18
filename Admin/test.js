@@ -95,3 +95,91 @@ AddBlogForm.addEventListener('submit', (e) => {
 
     });
 });
+
+
+
+
+
+
+
+
+
+
+// const firebaseConfig = {
+//     apiKey: "AIzaSyDPJNXs39XXwg8rZzatFSEVzHnwbdAo6-4",
+//     authDomain: "aimelive-capstone.firebaseapp.com",
+//     projectId: "aimelive-capstone",
+//     storageBucket: "aimelive-capstone.appspot.com",
+//     messagingSenderId: "319177014265",
+//     appId: "1:319177014265:web:bd5d6f830678f33f6c9b28"
+// };
+
+// const app = firebase.initializeApp(firebaseConfig);
+// form.addEventListener('submit', (e) => {
+//     e.preventDefault()
+
+
+
+
+//     if (formValidation()) {
+//         firebase.auth().signInWithEmailAndPassword(form.email.value, form.password.value)
+//             .then((userCredential) => {
+//                 swal("Welcome Admin", "You're successfully logged in, Click OK to continue!", "success").then(() => {
+//                     //console.log("Logge¬ød in")
+//                     //alert("Let's Go, Click OK to continue ")
+//                     location.href = 'Admin/dashboard.html'
+//                 })
+//             })
+//             .catch((error) => {
+//                 swal("Oops!", "Wrong Email or Paswword! Contact Admin for help! ", "error").then(() => {
+//                         form.reset();
+//                         form.email.focus();
+//                         emails.innerHTML = "E-mail";
+//                         passwords.innerHTML = "Password"
+//                     })
+//                     //alert("Wrong username or Password, Please contact admin for help")
+//                 var errorCode = error.code;
+//                 var errorMessage = error.message;
+//             });
+//     }
+
+// });
+
+// function formValidation() {
+
+
+// if (document.loginAdmin.email.value == "") {
+//     emails.innerHTML = "Please provide your Email!"
+//     emails.style.color = "red";
+//     document.loginAdmin.email.focus();
+//     return false;
+// } else {
+//     emails.innerHTML = ""
+// }
+// if (document.loginAdmin.email.value != "") {
+
+//     var emailID = document.getElementById("adminEmail").value;
+//     atpos = emailID.indexOf("@");
+//     dotpos = emailID.lastIndexOf(".");
+
+//     if (atpos < 1 || (dotpos - atpos < 2)) {
+//         emails.innerHTML = "Incorret Email (@,.) are missing";
+//         emails.style.color = "red";
+//         document.loginAdmin.email.focus();
+//         return false;
+
+//     }
+
+//     // }
+
+
+//     if (document.loginAdmin.password.value == "") {
+//         passwords.innerHTML = "Please provide your password!";
+//         passwords.style.color = "red";
+//         document.loginAdmin.password.focus();
+//         return false;
+//     }
+
+
+//     return (true);
+// // }

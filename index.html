@@ -7,10 +7,13 @@
     <meta name="keywords" content="Aimelive, Biography, Awesome websites">
     <meta name="author" content="Aime Ndayambaje">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aimelive - Capstone Project | Landing Page </title>
+    <title>Aimelive - Welcome</title>
     <link rel="icon" href="images/Rectangle 21.png" type="image/x-icon">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
 </head>
 
 <body>
@@ -27,7 +30,7 @@
                 <li><a href="blog.html">News</a> </li>
                 <li><a href="contact.html">Contacts</a> </li>
                 <li><a href="about.html">About</a> </li>
-                <li><a href="login.html" id="admin_login">login</a> </li>
+                <li><a onclick="login_out()" id="admin_login">login</a> </li>
             </ul>
             <a class="humberg" onclick="showNav()" id="humberg"><i class="fa fa-bars"></i></a>
             <div class="mybodyhover" id="mybodyhover" onclick="closeNav()"></div>
@@ -95,6 +98,7 @@
             mybodyhover.style.display = "none"
         }
     </script>
+    <script src="server.js"></script>
 </body>
 
 </html>

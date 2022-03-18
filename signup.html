@@ -7,7 +7,7 @@
     <meta name="keywords" content="Aimelive, Biography, Awesome websites">
     <meta name="author" content="Aime Ndayambaje">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aimelive - Login Page </title>
+    <title>Aimelive - Create Account </title>
     <link rel="icon" href="images/Rectangle 21.png" type="image/x-icon">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -59,87 +59,65 @@
             <img src="images/Rectangle 21.png" id="logo" width="80px" />
             <h2 id="animateHeading">Hey Everyone, Welcome</h2>
             <form method="post" class="login_form" name="loginAdmin">
+                <label id="errorName">Full Name  </label><br>
+                <input type="text" name="name" placeholder="Enter your full name" class="input" id="userName" />
+                <br>
                 <label id="errorEmail">E-mail  </label><br>
-                <input type="text" name="email" placeholder="Email or Phone number" class="input" id="adminEmail" />
+                <input type="text" name="email" placeholder="Enter you email" class="input" id="userEmail" />
+                <br>
+                <label id="errorPhone">Phone  </label><br>
+                <input type="number" name="phone" placeholder="Enter your Phone number" class="input" id="userPhone" />
                 <br>
                 <label id="errorPassword">Password </label><br>
-                <input type="password" name="password" placeholder="Enter Password" autocomplete="current-password" class="input" id="toggle-password" />
+                <input type="password" name="password" placeholder="Enter Password" autocomplete="current-password" class="input" />
                 <br>
-                <label id="checkbox"><input type="checkbox" onclick="myFunction()"> &nbsp; Show Password</label>
-
+                <label id="errorConfirm">Confirm Password </label><br>
+                <input type="password" name="confirmPassword" placeholder="Re-Enter Password" autocomplete="current-password" class="input" />
                 <br>
-                <input type="submit" Value="Sign in" placeholder="Email or Phone number" class="input" id="signin" /><br>
+                <input type="submit" Value="Create Account" class="input" id="signin" /><br>
 
             </form>
-            <p>Don't have an Account? <a href="signup.html"> Sign up now </a></p>
+            <p>Already have Account? <a href="login.html"> Login </a></p>
         </div>
     </center>
 
     <script>
-        const form = document.querySelector('.login_form');
-        let emails = document.getElementById("errorEmail");
-        let passwords = document.getElementById("errorPassword");
-
-        function myFunction() {
-            var x = document.getElementById("toggle-password");
-
-            if (x.type === "password") {
-                x.type = "text";
-            } else {
-                x.type = "password";
-            }
-
-
-        }
+        const form = document.querySelector('.login_form')
 
         form.addEventListener('submit', async(e) => {
             e.preventDefault()
 
             try {
-                const resp = await fetch(server + 'users/login', {
+                const resp = await fetch('https://my-brand-aimelive.herokuapp.com/api/v1/users/signup', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
+                        name: form.name.value,
                         email: form.email.value,
-                        password: form.password.value
+                        password: form.password.value,
+                        confirmPassword: form.confirmPassword.value,
+                        phone: form.phone.value,
                     })
                 })
-
                 const data = await resp.json()
-                    //console.log(resp)
-                if (resp.status == 200) {
+                console.log(data)
+                if (resp.status == 201) {
                     swal('success', data.Message, 'success').then(() => {
-                        localStorage.setItem('token', data.Token)
-
-                        if (data.Role == 'admin') {
-                            location.href = './Admin/dashboard.html'
-                        }
-                        if (data.Role == 'user') {
-                            location.href = './'
-
-                        }
+                        location.href = 'login.html'
                     })
 
                 }
-                //const data = await resp.json()
 
-                if (resp.status == 404) {
+                if (resp.status == 400) {
                     swal('error', data.Error, 'error')
-                }
-                if (resp.status == 403) {
-                    swal('error', data.Error, 'error')
-                }
-
-                if (resp.status == 500) {
-                    swal('error', data.Message, 'error')
                 }
 
 
             } catch (error) {
-
+                console.log("an error occured while sgining up a new user")
             }
 
         })

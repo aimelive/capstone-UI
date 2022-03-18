@@ -300,8 +300,11 @@ body .login .input {
     transition: 0.2s all;
 }
 
-body .login input[type=email]:focus,
-body .login input[type=password]:focus {
+body .login .input:hover {
+    border: 0.5px solid #ECB22E;
+}
+
+body .login .input:focus {
     border: 1px solid #ECB22E;
 }
 
