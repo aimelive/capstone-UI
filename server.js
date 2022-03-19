@@ -1,14 +1,15 @@
 const server = 'https://my-brand-aimelive.herokuapp.com/api/v1/'
 
 
-
-//logout functions here
+let token = localStorage.getItem('token')
+    //logout functions here
 let logoutBtn = document.getElementById("admin_login")
 
 logoutBtn.style.cursor = "pointer"
 
 if (localStorage.getItem('token')) {
     logoutBtn.innerHTML = "Logout"
+    getuserInfo();
 }
 
 function login_out() {

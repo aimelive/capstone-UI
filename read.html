@@ -205,6 +205,29 @@
         });
     </script>
     <script>
+        async function getuserInfo() {
+            response = await fetch(server + "users/info/user", {
+                headers: {
+                    "Authorization": token,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            })
+
+            const user = await response.json()
+
+            if (response.status == 200) {
+                comment.yourName.value = user.Data.name
+                comment.yourName.disabled = true
+                comment.yourEmail.value = user.Data.email
+                comment.yourEmail.disabled = true
+            } else {
+                comment.yourName.disabled = false
+                comment.yourEmail.disabled = false
+            }
+        }
+    </script>
+    <script>
         let humberg = document.getElementById("humberg")
         let navBar = document.getElementById("mobileNav")
         let mybodyhover = document.getElementById("mybodyhover")

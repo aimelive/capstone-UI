@@ -14,9 +14,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+
 </head>
 
 <body>
+
     <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -82,23 +84,24 @@
             <div class="newsletter card">
                 <div class="main-block">
                     <h1> Stay in touch</h1>
-                    <form method="post" name="signupNewsletter" action="javascript:void(0)">
+                    <form method="post" name="signupNewsletter" class="subscriptionForm">
                         <center>
                             <img src="images/subscribe-newsletter-icon-30-removebg-preview.png" width="20%" style="margin-bottom: 30px;" />
                         </center>
                         <div class="info">
                             <div class="info-item">
-                                <label class="icon" for="lastname"><i class="fas fa-user"></i></label>
-                                <input type="text" name="lastname" id="lastname" placeholder="Name" required/>
+                                <label class="icon" for="lastname"><i class="fa fa-user"></i></label>
+                                <input type="text" name="lastname" id="lastname" placeholder="Name" />
                             </div>
-                            <div class="info-item" style="width: 100%;">
+                            <div class="info-item2">
                                 <label class="icon" for="email"><i class="fa fa-envelope" style="font-size: 15px;"></i></label>
-                                <input type="email" name="email" id="email" placeholder="Email" required/>
+                                <input type="email" name="email" id="email" placeholder="Email" />
                             </div>
-
+                            <h1 style="text-align: center;display: none;" class="h1"> Already a Subscriber! <br> Thanks for subscribing! <br> Enjoy! 🎉🪄 <br> <br><br> </h1>
                         </div>
-                        <button type="submit">Submit</button>
+                        <button type="submit" class="subscribeButton">Subscribe</button>
                     </form>
+
                 </div>
             </div>
             <div class="card follow">
@@ -113,59 +116,21 @@
             </div>
         </div>
     </div>
+    <script src="./toRemove/firebase.js"></script>
 
     <div class="footer">
         <p class="label">&copy; Copright; Aimelive 2022 <a href="">Terms and Conditions here</a></p>
     </div>
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyDPJNXs39XXwg8rZzatFSEVzHnwbdAo6-4",
-            authDomain: "aimelive-capstone.firebaseapp.com",
-            projectId: "aimelive-capstone",
-            storageBucket: "aimelive-capstone.appspot.com",
-            messagingSenderId: "319177014265",
-            appId: "1:319177014265:web:bd5d6f830678f33f6c9b28"
-        };
-
-        const app = firebase.initializeApp(firebaseConfig);
-        const database = app.firestore()
-
-
-        database.collection("blogs").get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                //console.log(`${doc.id} => ${doc.data()}`);
-                const dataBlog = doc.data();
-                //console.log(dataBlog);
-                const blogID = doc.id;
-                const article = dataBlog.article;
-                const photo = dataBlog.photo;
-                const date = dataBlog.date;
-                const category = dataBlog.category;
-                getBlogs(article, photo, category, date, blogID)
-
-            });
-        });
-
-        function getBlogs(article, photo, category, date, blogID) {
-            const leftCol = document.getElementById("leftCol");
-            const card = document.createElement("div");
-            card.classList.add("card");
-            const container = `
-                <div class="cardimg toread">
-                    <img src="${photo}" />
-                    <h3>${category}</h3>
-                    <p>${article}&nbsp; <a href="read.html?${blogID}">read more</a></p> 
-                    <h5>Posted on, <span>${date.toDate().toDateString()}</span></h5>
-                </div>`
-            console.log(date);
-            card.innerHTML = container;
-            leftCol.appendChild(card);
-        }
     </script>
     <script>
         let humberg = document.getElementById("humberg")
         let navBar = document.getElementById("mobileNav")
         let mybodyhover = document.getElementById("mybodyhover")
+        const subscribeform = document.querySelector(".subscriptionForm")
+        let info_item = document.querySelector(".info-item")
+        let info_item2 = document.querySelector(".info-item2")
+        let subscribeButton = document.querySelector(".subscribeButton")
+        let h1 = document.querySelector(".h1")
 
         function showNav() {
             navBar.style.width = "45%";
@@ -176,7 +141,82 @@
             navBar.style.width = 0
             mybodyhover.style.display = "none"
         }
+
+
+        async function getuserInfo() {
+            response = await fetch(server + "users/info/user", {
+                headers: {
+                    "Authorization": token,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            })
+
+            const user = await response.json()
+
+            //existSubsriber(user.Data.email, user.Data.name)
+
+            if (response.status == 200) {
+                subscribeform.lastname.value = user.Data.name
+                subscribeform.lastname.disabled = true
+                subscribeform.email.value = user.Data.email
+                subscribeform.email.disabled = true
+            } else {
+                subscribeform.lastname.disabled = false
+                subscribeform.email.disabled = false
+            }
+        }
+
+        subscribeform.addEventListener('submit', async(e) => {
+            e.preventDefault()
+            try {
+
+                const resp = await fetch(server + 'subscriptions', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: subscribeform.lastname.value,
+                        email: subscribeform.email.value,
+                    })
+                })
+                const data = await resp.json()
+
+                if (resp.status == 201) {
+                    swal('success', data.Congratulation, 'success').then(() => {
+                        info_item.style.display = "none"
+                        info_item2.style.display = "none"
+                        subscribeButton.style.display = "none"
+                        h1.innerHTML = `<b>${data.Data.Subscriber.name} </b> <br> Thanks for subscribing!! <br><br>`
+                        h1.style.display = "block"
+                        subscribeform.reset()
+
+
+
+                    })
+                }
+                if (resp.status == 409) {
+                    swal('error', data.Message, 'error').then(() => {
+                        subscribeform.email.focus()
+                    })
+                }
+
+                if (resp.status == 400) {
+                    swal('error', data.Message, 'error').then(() => {})
+                }
+
+
+            } catch (error) {
+                console.log("AN ERROR OCCURED PLEASE " + error)
+            }
+
+        });
     </script>
+
+
+
     <script src="server.js"></script>
 </body>
 

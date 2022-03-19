@@ -16,12 +16,6 @@
 </head>
 
 <body>
-    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <section class="header navbar">
         <div>
@@ -87,36 +81,63 @@
 
     <script>
         const message = document.querySelector('.reach-out');
-        const firebaseConfig = {
-            apiKey: "AIzaSyDPJNXs39XXwg8rZzatFSEVzHnwbdAo6-4",
-            authDomain: "aimelive-capstone.firebaseapp.com",
-            projectId: "aimelive-capstone",
-            storageBucket: "aimelive-capstone.appspot.com",
-            messagingSenderId: "319177014265",
-            appId: "1:319177014265:web:bd5d6f830678f33f6c9b28"
-        };
+        let token = localStorage.getItem('token')
 
-        const app = firebase.initializeApp(firebaseConfig);
-        const database = app.firestore()
+        async function getuserInfo() {
+            response = await fetch(server + "users/info/user", {
+                headers: {
+                    "Authorization": token,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            })
 
-        message.addEventListener('submit', (e) => {
+            const user = await response.json()
+
+            if (response.status == 200) {
+                message.fullname.value = user.Data.name
+                message.fullname.disabled = true
+                message.youremail.value = user.Data.email
+                message.youremail.disabled = true
+            } else {
+                message.fullname.disabled = false
+                message.youremail.disabled = false
+            }
+        }
+
+
+
+        message.addEventListener('submit', async(e) => {
             e.preventDefault()
 
             if (formValidation()) {
-                database.collection("queries").add({
-                        name: message.fullname.value,
-                        email: message.youremail.value,
-                        message: message.yourmessage.value
-                    })
-                    .then((docRef) => {
+                try {
 
-                        window.location.href = "message_successfully.html"
-                        console.log("New Article Added Successfully with the ID", docRef.id)
-
+                    const resp = await fetch(server + 'messages', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: message.fullname.value,
+                            email: message.youremail.value,
+                            message: message.yourmessage.value
+                        })
                     })
-                    .catch((error) => {
-                        console.error("Error adding document: ", error);
-                    });
+                    if (resp.status == 201) {
+                        message.yourmessage.value = ""
+                        if (!token) {
+                            message.youremail.value = ""
+                            message.fullname.value = ""
+                        }
+                        location.href = 'message_successfully.html'
+                    }
+
+
+                } catch (error) {
+                    console.log("AN ERROR OCCURED PLEASE " + error)
+                }
             }
 
         });

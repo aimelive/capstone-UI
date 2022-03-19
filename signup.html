@@ -17,6 +17,11 @@
 </head>
 
 <body>
+    <script>
+        if (localStorage.getItem('token')) {
+            swal('warning', 'To sign up new Account you may need to log out an existing one', 'warning')
+        }
+    </script>
     <section class="header navbar">
         <div>
             <a href="index.html">

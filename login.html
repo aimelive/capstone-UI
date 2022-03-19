@@ -112,13 +112,13 @@
                     //console.log(resp)
                 if (resp.status == 200) {
                     swal('success', data.Message, 'success').then(() => {
-                        localStorage.setItem('token', data.Token)
+                        localStorage.setItem('token', 'Bearer ' + data.Token)
 
                         if (data.Role == 'admin') {
                             location.href = './Admin/dashboard.html'
                         }
                         if (data.Role == 'user') {
-                            location.href = './'
+                            location.href = './blog.html'
 
                         }
                     })
@@ -128,6 +128,8 @@
 
                 if (resp.status == 404) {
                     swal('error', data.Error, 'error')
+                    form.reset()
+
                 }
                 if (resp.status == 403) {
                     swal('error', data.Error, 'error')
