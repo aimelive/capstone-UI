@@ -8,7 +8,7 @@
     <meta name="keywords" content="Aimelive, Biography, Awesome websites">
     <meta name="author" content="Aime Ndayambaje">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aimelive - Blog Posts </title>
+    <title>🎉🪄 Aimelive - Blog Posts </title>
     <link rel="icon" href="images/Rectangle 21.png" type="image/x-icon">
     <link rel="stylesheet" href="css/blog.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -57,7 +57,14 @@
 
     </div>
     <div class="header">
-        <h2>Aimelive - Blog Posts</h2>
+        <form>
+            <span>Aimelive - Blog Posts 🎉🪄 </span>
+            <input type="search" name="searchBlog" id="searchBlog" class="searchBlog" placeholder="Search Aimelive">
+        </form>
+    </div>
+    <div class="subHeader">
+        <p><i class="fa fa-link" aria-hidden="true"></i> Quick Links: <a href="#">Personal blog</a> <a href="#"> Projects </a><a href="#">Careers </a><a href="#">Awards</a><a href="#"> Motivations </a>
+            <a href="#">View CV </a><a href="#"> Social media links</a> <a href="#"> Contacts</a></p>
     </div>
 
     <div class="row blog_body">
@@ -116,107 +123,59 @@
             </div>
         </div>
     </div>
-    <script src="./toRemove/firebase.js"></script>
-
     <div class="footer">
         <p class="label">&copy; Copright; Aimelive 2022 <a href="">Terms and Conditions here</a></p>
     </div>
-    </script>
+    <!-- <script src="./toRemove/firebase.js"></script> -->
     <script>
-        let humberg = document.getElementById("humberg")
-        let navBar = document.getElementById("mobileNav")
-        let mybodyhover = document.getElementById("mybodyhover")
-        const subscribeform = document.querySelector(".subscriptionForm")
-        let info_item = document.querySelector(".info-item")
-        let info_item2 = document.querySelector(".info-item2")
-        let subscribeButton = document.querySelector(".subscribeButton")
-        let h1 = document.querySelector(".h1")
+        //let title = document.getElementById("titleBlog")
 
-        function showNav() {
-            navBar.style.width = "45%";
-            mybodyhover.style.display = "block"
-        }
+        fetch("https://my-brand-aimelive.herokuapp.com/api/v1/blogs")
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                //title.innerHTML = data.Content[12].title
+                //console.log(data.Content[12].title)
+                //console.log(data.Number_of_blogs)
 
-        function closeNav() {
-            navBar.style.width = 0
-            mybodyhover.style.display = "none"
-        }
+                let length = data.Number_of_blogs
 
+                for (let index = 0; index < 10; index++) {
 
-        async function getuserInfo() {
-            response = await fetch(server + "users/info/user", {
-                headers: {
-                    "Authorization": token,
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
+                    const blog = data.Content[index]
+
+                    const blogID = blog._id;
+                    const title = blog.title;
+                    const photo = blog.imgURL;
+                    const date = new Date().toDateString(blog.dateCreated);
+                    const category = blog.category;
+                    const preview = blog.preview;
+                    const comments = blog.comments.length;
+                    const body = blog.body;
+
+                    getBlogs(blogID, title, photo, date, category, preview, body, comments)
+
                 }
+
             })
 
-            const user = await response.json()
-
-            //existSubsriber(user.Data.email, user.Data.name)
-
-            if (response.status == 200) {
-                subscribeform.lastname.value = user.Data.name
-                subscribeform.lastname.disabled = true
-                subscribeform.email.value = user.Data.email
-                subscribeform.email.disabled = true
-            } else {
-                subscribeform.lastname.disabled = false
-                subscribeform.email.disabled = false
-            }
+        function getBlogs(postId, blogTitle, blogPhoto, uploadDate, blogCategory, blogPreview, blogBody, noComment) {
+            const leftCol = document.getElementById("leftCol");
+            const card = document.createElement("div");
+            card.classList.add("card");
+            const container = `
+            <div class="cardimg toread" onclick="location.href='read.html?${postId}'">
+            <img sc="${blogPhoto}" />
+            <h3>${blogCategory}</h3>
+            <p>${blogTitle} &nbsp; <a href="read.html?${postId}" class="readmore">Read more</a></p> 
+            <h5><span id="commentCount" style="color:#3299F9"> <i class="fa fa-comments-o"> </i> ${noComment}</span>  &nbsp; <span style="font-weight: 400">   ${uploadDate}</span> &nbsp; </h5> 
+        </div>`
+            card.innerHTML = container;
+            leftCol.appendChild(card);
         }
-
-        subscribeform.addEventListener('submit', async(e) => {
-            e.preventDefault()
-            try {
-
-                const resp = await fetch(server + 'subscriptions', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        name: subscribeform.lastname.value,
-                        email: subscribeform.email.value,
-                    })
-                })
-                const data = await resp.json()
-
-                if (resp.status == 201) {
-                    swal('success', data.Congratulation, 'success').then(() => {
-                        info_item.style.display = "none"
-                        info_item2.style.display = "none"
-                        subscribeButton.style.display = "none"
-                        h1.innerHTML = `<b>${data.Data.Subscriber.name} </b> <br> Thanks for subscribing!! <br><br>`
-                        h1.style.display = "block"
-                        subscribeform.reset()
-
-
-
-                    })
-                }
-                if (resp.status == 409) {
-                    swal('error', data.Message, 'error').then(() => {
-                        subscribeform.email.focus()
-                    })
-                }
-
-                if (resp.status == 400) {
-                    swal('error', data.Message, 'error').then(() => {})
-                }
-
-
-            } catch (error) {
-                console.log("AN ERROR OCCURED PLEASE " + error)
-            }
-
-        });
     </script>
-
-
-
+    <script src="./js/subscribe.js"></script>
     <script src="server.js"></script>
 </body>
 

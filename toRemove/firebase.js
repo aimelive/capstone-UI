@@ -32,7 +32,7 @@ function getBlogs(article, photo, category, date, blogID) {
     card.classList.add("card");
     const container = `
         <div class="cardimg toread">
-            <img src="${photo}" />
+            <img sc="${photo}" />
             <h3>${category}</h3>
             <p>${article}&nbsp; <a href="read.html?${blogID}">read more</a></p> 
             <h5>Posted on, <span>${date.toDate().toDateString()}</span></h5>

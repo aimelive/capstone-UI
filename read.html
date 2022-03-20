@@ -19,11 +19,6 @@
 </head>
 
 <body>
-    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
     <div class="navbar">
         <table>
             <tr>
@@ -55,7 +50,11 @@
         </nav>
     </div>
     <div class="header">
-        <h2>Aimelive - Blog Posts</h2>
+        <span>Aimelive - Blog Posts 🎉🪄  </span>
+    </div>
+    <div class="subHeader">
+        <p><i class="fa fa-link" aria-hidden="true"></i> Quick Links: <a href="#">Personal blog</a> <a href="#"> Projects </a><a href="#">Careers </a><a href="#">Awards</a><a href="#"> Motivations </a>
+            <a href="#">View CV </a><a href="#"> Social media links</a> <a href="#"> Contacts</a></p>
     </div>
 
     <div class="row blog_body">
@@ -132,6 +131,29 @@
                 <a href="#" class="fa fa-slack"></a>
                 <a href="#" class="fa fa-github"></a>
             </div>
+            <div class="newsletter card">
+                <div class="main-block">
+                    <h1> Stay in touch</h1>
+                    <form method="post" name="signupNewsletter" class="subscriptionForm">
+                        <center>
+                            <img src="images/subscribe-newsletter-icon-30-removebg-preview.png" width="20%" style="margin-bottom: 30px;" />
+                        </center>
+                        <div class="info">
+                            <div class="info-item">
+                                <label class="icon" for="lastname"><i class="fa fa-user"></i></label>
+                                <input type="text" name="lastname" id="lastname" placeholder="Name" />
+                            </div>
+                            <div class="info-item2">
+                                <label class="icon" for="email"><i class="fa fa-envelope" style="font-size: 15px;"></i></label>
+                                <input type="email" name="email" id="email" placeholder="Email" />
+                            </div>
+                            <h1 style="text-align: center;display: none;" class="h1"> Already a Subscriber! <br> Thanks for subscribing! <br> Enjoy! 🎉🪄 <br> <br><br> </h1>
+                        </div>
+                        <button type="submit" class="subscribeButton">Subscribe</button>
+                    </form>
+
+                </div>
+            </div>
         </div>
     </div>
 
@@ -139,72 +161,60 @@
         <p class="label">&copy; Copright; Aimelive 2022 <a href="">Terms and Conditions here</a></p>
     </div>
     <script>
-        const searchID = location.search.substring(1);
-        //console.log(searchID);
-        const firebaseConfig = {
-            apiKey: "AIzaSyDPJNXs39XXwg8rZzatFSEVzHnwbdAo6-4",
-            authDomain: "aimelive-capstone.firebaseapp.com",
-            projectId: "aimelive-capstone",
-            storageBucket: "aimelive-capstone.appspot.com",
-            messagingSenderId: "319177014265",
-            appId: "1:319177014265:web:bd5d6f830678f33f6c9b28"
-        };
+        let status;
 
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = app.firestore();
+        const url = `https://my-brand-aimelive.herokuapp.com/api/v1/blogs/${searchID}`
+            //console.log(url);
+        fetch(url)
+            .then((response) => {
+                status = response.status
+                return response.json();
+            })
+            .then((data) => {
+                //title.innerHTML = data.Content[12].title
+                if (status == 200) {
 
+                    //console.log("READY TO VIEW" + data.Content.blog.title)
 
-
-
-        //adding comment into firebase
-
-        const comment = document.querySelector('.commentForm');
-        comment.addEventListener('submit', (e) => {
-            e.preventDefault()
-
-            db.collection("comments").add({
-                    name: comment.yourName.value,
-                    email: comment.yourEmail.value,
-                    comment: comment.yourComment.value,
-                    postID: searchID
-                })
-                .then((docRef) => {
-                    console.log("New comment added with the ID", docRef.id)
-                })
-                .catch((error) => {
-                    console.error("Error adding the comment: ", error);
-                });
-
-        })
-
-
-        //ending with adding data into database
+                    document.getElementById("titleBar").innerHTML = data.Content.blog.title;
+                    document.getElementById("title").innerHTML = data.Content.blog.title;
+                    document.getElementById("category").innerHTML = data.Content.blog.category;
+                    document.getElementById("blogBody").innerHTML = data.Content.blog.body;
+                    document.getElementById("date").innerHTML = new Date().toDateString(data.Content.blog.dateCreated)
+                    const image = document.getElementById("photo");
+                    image.setAttribute("src", data.Content.blog.imgURL);
+                    //console.log("Document data:", doc.data());
 
 
 
+                    for (let index = 0; index < data.Content.blog.comments.length; index++) {
+                        //console.log(data.Content.blog.comments[index]._id)
+                        const id = data.Content.blog.comments[index]._id
+                        const username = data.Content.blog.comments[index].name
+                        const Comment = data.Content.blog.comments[index].comment
+                        const dateC = data.Content.blog.comments[index].dateCreated
 
-        var docRef = db.collection("blogs").doc(searchID);
+                        displayComment(id, username, Comment, dateC);
+                    }
 
-        docRef.get().then((doc) => {
-            if (doc.exists) {
 
-                document.getElementById("titleBar").innerHTML = doc.data().article;
-                document.getElementById("title").innerHTML = doc.data().article;
-                document.getElementById("category").innerHTML = doc.data().category;
-                document.getElementById("blogBody").innerHTML = doc.data().title;
-                document.getElementById("date").innerHTML = doc.data().date.toDate().toDateString();
-                const image = document.getElementById("photo");
-                image.setAttribute("src", doc.data().photo);
-                //console.log("Document data:", doc.data());
-            } else {
-                // doc.data() will be undefined in this case
-                console.log("No such document!");
-            }
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
+
+                }
+                if (status == 404) {
+                    //console.log("Blog not found!!!")
+                    swal('error', '(404) ' + data.Error, 'error').then(() => {
+                        location.href = 'blog.html'
+                    })
+                }
+
+            })
+
+        function displayComment(commentId, name, comment, date) {
+            document.getElementById('comment-section').insertAdjacentHTML('beforeend', commentBar(commentId, name, comment, date));
+        }
     </script>
     <script>
+        const comment = document.querySelector(".commentForm")
         async function getuserInfo() {
             response = await fetch(server + "users/info/user", {
                 headers: {
@@ -227,21 +237,7 @@
             }
         }
     </script>
-    <script>
-        let humberg = document.getElementById("humberg")
-        let navBar = document.getElementById("mobileNav")
-        let mybodyhover = document.getElementById("mybodyhover")
-
-        function showNav() {
-            navBar.style.width = "45%";
-            mybodyhover.style.display = "block"
-        }
-
-        function closeNav() {
-            navBar.style.width = 0
-            mybodyhover.style.display = "none"
-        }
-    </script>
+    <script src="./js/subscribe.js"></script>
     <script src="server.js"></script>
 </body>
 
