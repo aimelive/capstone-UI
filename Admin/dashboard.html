@@ -140,19 +140,7 @@
         </div>
         <p style="color: #3299F9;text-align: center;text-decoration: underline;"> Load more...</p>
     </div>
-    <script>
-        function logout() {
-            swal({
-                title: 'Log out',
-                text: 'Are you sure you want to log out',
-                icon: 'warning',
-            }).then((deleteFunc) => {
-                localStorage.removeItem('token')
-                location.href = '../login.html'
-            })
-
-        }
-    </script>
+    <script src="js/logout.js"></script>
 </body>
 
 </html>

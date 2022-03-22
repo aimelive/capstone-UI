@@ -20,7 +20,7 @@
                 padding: 0px 15px;
                 padding-top: 5px;
                 width: 100%;
-                z-index: 1000000000000;
+                z-index: 2;
             }
             
             body .header #logo_text {
@@ -112,9 +112,12 @@
                 color: black;
             }
             
-            .dashboard,
             .sidebar {
                 margin-top: 85px;
+            }
+            
+            .dashboard {
+                margin-top: 40px;
             }
             
             body .dashboard {
@@ -307,6 +310,11 @@
                 clear: both;
             }
             
+            body .dashboard table tr #actions a {
+                padding: auto;
+                margin: auto;
+            }
+            
             body .dashboard .animationP {
                 margin-bottom: 30px;
             }
@@ -383,6 +391,125 @@
                 animation: aniamteCard 2s;
             }
             
+            body .showModal {
+                display: none;
+                height: 100%;
+                width: 100%;
+                background-color: rgba(0, 0, 0, 0.329);
+                position: fixed;
+                z-index: 3;
+                top: 0;
+                right: 0;
+                overflow: auto;
+                padding-top: 150px;
+                transition: 5s;
+            }
+            
+            body .showModal .modalContent {
+                background-color: #fefefe;
+                margin: auto;
+                padding: 20px;
+                width: 80%;
+                text-align: center;
+                border-radius: 12px;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            }
+            
+            body .showModal .modalContent .messageBox {
+                background-color: ghostwhite;
+                color: #3299F9;
+                font-weight: 500;
+                border-radius: 5px;
+                width: 80%;
+                margin: auto;
+                padding: 20px;
+                text-align: justify;
+            }
+            
+            body .showModal .modalContent .messageBox .com-o {
+                position: relative;
+                float: left;
+            }
+            
+            body .showModal .modalContent .messageBox p {
+                padding: 5px;
+            }
+            
+            body .showModal .modalContent img {
+                width: 50px;
+            }
+            
+            body .showModal .modalContent .close {
+                color: #aaaaaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+            
+            body .showModal .modalContent button {
+                background-color: #ECB22E;
+                color: white;
+                padding: 14px 20px;
+                margin: 8px 0;
+                border: none;
+                cursor: pointer;
+                width: 100%;
+                opacity: 0.9;
+                border-radius: 3em;
+                transition: 0.3s;
+            }
+            
+            body .showModal .modalContent button:hover {
+                opacity: 1;
+            }
+            
+            body .showModal .modalContent .cancelbtn,
+            body .showModal .modalContent .deletebtn,
+            body .showModal .modalContent .replybtn {
+                float: left;
+                width: 31%;
+                margin: 5px;
+            }
+            
+            body .showModal .modalContent .close:hover,
+            body .showModal .modalContent .close:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+            }
+            
+            body .showModal .modalContent .clearfix::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+            
+            body .postLink {
+                padding: 12px;
+            }
+            
+            body .postLink a {
+                color: #3299F9;
+                font-weight: 400px;
+                text-decoration: none;
+            }
+            
+            body .postLink a:hover {
+                text-decoration: underline;
+            }
+            
+            body .postLink .mp {
+                padding: 0px 12px;
+                display: inline-block;
+            }
+            
+            body .postLink .addPost {
+                background-color: white;
+                padding: 20px 50px;
+                border-radius: 3em;
+                box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.3);
+            }
+            
             @keyframes aniamteCard {
                 from {
                     opacity: 1;
@@ -442,6 +569,11 @@
                 body .dashboard .container .card img {
                     height: auto;
                 }
+                body .showModal .modalContent .cancelbtn,
+                body .showModal .modalContent .deletebtn,
+                body .showModal .modalContent .replybtn {
+                    width: 100%;
+                }
             }
             
             @media only screen and (orientation: landscape) {
@@ -461,5 +593,8 @@
                 }
                 body .dashboard .faqs #ign {
                     right: 10px;
+                }
+                body .showModal .modalContent {
+                    width: 50%;
                 }
             }

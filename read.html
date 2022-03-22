@@ -12,8 +12,7 @@
     <link rel="icon" href="images/Rectangle 21.png" type="image/x-icon">
     <link rel="stylesheet" href="css/blog.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="script.js">
-    </script>
+    <script src="script.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
@@ -43,7 +42,7 @@
             <a href="#">News</a>
             <a href="#">About</a>
             <a href="#">Contacts</a>
-            <a href="#">Login</a>
+            <a onclick="login_out()" id="admin_login">Login</a>
 
 
 
@@ -73,7 +72,7 @@
                     <h5>Posted on, <span id="date"> </span></h5>
                 </div>
                 <h3>Leave a comment </h3>
-                <div class="cardimg" style="height: auto;">
+                <div class="cardimg" style="height: auto;" id="commentSection">
                     <div class="comment-section" id="comment-section">
                         <div class="comment-container">
                             <div class="profileAvatar">
@@ -213,10 +212,15 @@
             document.getElementById('comment-section').insertAdjacentHTML('beforeend', commentBar(commentId, name, comment, date));
         }
     </script>
+
+    <script src="./js/subscribe.js"></script>
+    <script src="server.js"></script>
     <script>
+        getuserInfo();
+
         const comment = document.querySelector(".commentForm")
         async function getuserInfo() {
-            response = await fetch(server + "users/info/user", {
+            response = await fetch("https://my-brand-aimelive.herokuapp.com/api/v1/users/info/user", {
                 headers: {
                     "Authorization": token,
                     'Accept': 'application/json',
@@ -225,7 +229,7 @@
             })
 
             const user = await response.json()
-
+            console.log("WHY CAN'T I GET THE USER INFO " + user)
             if (response.status == 200) {
                 comment.yourName.value = user.Data.name
                 comment.yourName.disabled = true
@@ -237,8 +241,6 @@
             }
         }
     </script>
-    <script src="./js/subscribe.js"></script>
-    <script src="server.js"></script>
 </body>
 
 </html>
