@@ -12,7 +12,6 @@
     <link rel="icon" href="Rectangle 21.png" type="image/x-icon">
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
     <script src="./js/script.js"></script>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -45,25 +44,7 @@
             </div>
 
         </div>
-        <script>
-            function showHidden() {
-                document.getElementById("dropDownList").style.display = "block";
-            }
-
-            // Close the dropdown if the user clicks outside of it
-            window.onclick = function(event) {
-                if (!event.target.matches('.styledImage')) {
-                    var dropdowns = document.getElementsByClassName("dropDown");
-                    var i;
-                    for (i = 0; i < dropdowns.length; i++) {
-                        var openDropdown = dropdowns[i];
-                        if (openDropdown.style.display == "block") {
-                            openDropdown.style.display = "none";
-                        }
-                    }
-                }
-            }
-        </script>
+        <script src="./js/dropdown.js"></script>
     </div>
     <nav class="sidebar">
         <a href="dashboard.html"><i class="fa fa-home"></i> Home</a>
@@ -73,12 +54,6 @@
         <a href="#"><i class="fa fa-bar-chart"></i> Analytics</a>
         <a href="#"> <i class="fa fa-gear"></i> Account Settings</a>
     </nav>
-
-    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
     <div class="dashboard">
         <a href="news_article.html" class="back"><i class="fa fa-arrow-circle-o-left"></i> Back</a>
@@ -118,7 +93,7 @@
                         <label for="Preview">Write a preview: </label>
                     </div>
                     <div class="inputClass">
-                        <textarea name="preview" id="summernote" placeholder="Write a blog preview" required></textarea>
+                        <textarea name="preview" placeholder="Write a blog preview" style="resize: none;height: 200px;" required></textarea>
                     </div>
                 </div>
                 <div class="row">
@@ -127,7 +102,7 @@
                     </div>
 
                     <div class="inputClass">
-                        <textarea name="blog" id="mytextarea" placeholder="Write a blog..." required></textarea>
+                        <textarea name="blog" id="summernote" placeholder="Write a blog..." required></textarea>
 
                     </div>
                 </div>
@@ -149,72 +124,70 @@
                 </div>
                 <br>
                 <div class="row">
-                    <input type="reset" value="Clear">
-                    <input type="button" value="Save">
+                    <!-- <input type="reset" value="Clear">
+                    <input type="button" value="Save"> -->
                     <input type="submit" value="Post">
                 </div>
             </form>
             <script>
                 const form = document.querySelector('.add-post-to-database');
 
-                const firebaseConfig = {
-                    apiKey: "AIzaSyDPJNXs39XXwg8rZzatFSEVzHnwbdAo6-4",
-                    authDomain: "aimelive-capstone.firebaseapp.com",
-                    projectId: "aimelive-capstone",
-                    storageBucket: "aimelive-capstone.appspot.com",
-                    messagingSenderId: "319177014265",
-                    appId: "1:319177014265:web:bd5d6f830678f33f6c9b28"
-                };
 
-                const app = firebase.initializeApp(firebaseConfig);
-
-                form.addEventListener('submit', (e) => {
+                form.addEventListener('submit', async(e) => {
                     e.preventDefault()
-                    const image = form.image.files[0];
-                    const photoName = image.name;
+                    const title = form.title.value
+                    const category = form.category.value
+                    const preview = form.preview.value
+                    const body = form.blog.value
+                    const imgURL = form.image.files[0]
 
-                    var storageRef = app.storage().ref('uploads/' + photoName);
+                    try {
 
-                    var uploadTask = storageRef.put(image);
-                    uploadTask.on('state_changed', function(snapshot) {
+                        const formData = new FormData();
 
-                        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        formData.append("title", title)
+                        formData.append("category", category)
+                        formData.append("preview", preview)
+                        formData.append("body", body)
+                        formData.append("imgURL", imgURL)
 
-                        console.log("upload is " + progress + " done");
-                    }, function(error) {
+                        //console.log("AKIRA ISHIMWE " + formData + "AND THE TITLE " + title)
 
-                        console.log(error)
-                    }, function() {
-
-                        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                            const db = app.firestore()
-
-                            db.collection("blogs").add({
-
-                                    article: form.title.value,
-                                    category: form.category.value,
-                                    photo: downloadURL,
-                                    preview: form.preview.value,
-                                    title: form.blog.value,
-                                    date: new Date()
-                                })
-                                .then((docRef) => {
-                                    //alert("New blog Added Successfully")
-                                    swal("Success", "New post added successfully!!!", "success").then(() => {
-                                            form.reset()
-                                        })
-                                        //console.log("New Article Added Successfully with the ID", docRef.id)
-                                })
-                                .catch((error) => {
-                                    swal("Oops!", "An error occured, We can't add Post", "error").then(() => {
-                                        //form.reset()
-                                    })
-                                    console.error("Error adding document: ", error);
-                                });
-
+                        const resp = await fetch('https://my-brand-aimelive.herokuapp.com/api/v1/addBlog', {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': token
+                            },
+                            body: formData
                         })
-                    })
+
+                        const data = await resp.json()
+                            //console.log(resp)
+                        if (resp.status == 201) {
+                            swal('Success', data.Message, 'success').then(() => {})
+
+                        }
+
+                        if (resp.status == 500) {
+                            console.log(" MUKUNZI MWIZA NZIKO UNYUMVA" + data.Error)
+                            swal(`Status: ` + data.Status, data.Message, 'error')
+
+                        }
+
+                        if (resp.status == 400) {
+                            swal(data.Blog, data.Title, 'error')
+                        }
+
+
+                    } catch (error) {
+                        console.log("AN ERROR OCCURED PLEASE" + error)
+                    }
+
                 })
+
+
+                //finishing to add new post to a database
+
 
                 $(document).ready(function() {
                     $('#summernote').summernote();
@@ -242,9 +215,6 @@
         </div>
 
     </div>
-    <script>
-        CKEDITOR.replace("mytextarea");
-    </script>
 </body>
 
 </html>

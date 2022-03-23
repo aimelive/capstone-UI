@@ -13,7 +13,7 @@ async function getuserInfo() {
 
     const user = await response.json()
 
-    if (user.Data.role == 'admin') {
+    if (user.Data.role != 'admin') {
         location.href = '../blog.html'
     }
 }

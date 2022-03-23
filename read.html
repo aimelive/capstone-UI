@@ -67,6 +67,7 @@
                     <p class="title" id="title"></p>
 
                     <h5 id="category"></h5>
+                    <p id="blogPreview"> </p>
                     <p id="blogBody"> </p>
 
                     <h5>Posted on, <span id="date"> </span></h5>
@@ -178,6 +179,7 @@
                     document.getElementById("titleBar").innerHTML = data.Content.blog.title;
                     document.getElementById("title").innerHTML = data.Content.blog.title;
                     document.getElementById("category").innerHTML = data.Content.blog.category;
+                    document.getElementById("blogPreview").innerHTML = data.Content.blog.preview;
                     document.getElementById("blogBody").innerHTML = data.Content.blog.body;
                     document.getElementById("date").innerHTML = new Date().toDateString(data.Content.blog.dateCreated)
                     const image = document.getElementById("photo");

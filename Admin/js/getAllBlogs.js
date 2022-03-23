@@ -37,7 +37,7 @@ function getBlogs(i, postId, blogTitle, blogPhoto, uploadDate, blogCategory, blo
     if (status = 0) st = "Private";
     const container = `
         <td>${i+1} </td>
-        <td><img src="${blogPhoto}" /> </td>
+        <td><img src="${blogPhoto}" width="50px"/> </td>
         <td>${blogTitle} </td>
         <td>${blogCategory}</td>
         <td>${noComment} </td>
