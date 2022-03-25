@@ -18,6 +18,8 @@
 </head>
 
 <body>
+
+
     <div class="header">
         <span class="humberg" onclick="openSideNav()"> <i class="fa fa-bars" aria-hidden="true"></i></span>
         <label id="logo_text">AimeLive</label>
@@ -31,50 +33,16 @@
             </div>
 
         </div>
-        <script>
-            function showHidden() {
-                document.getElementById("dropDownList").style.display = "block";
-            }
-
-            function openSideNav() {
-                document.getElementById("sidebar").style.display = "block";
-                document.getElementById("sidebar").style.top = "-25px";
-            }
-
-            // Close the dropdown if the user clicks outside of it
-            window.onclick = function(event) {
-                if (!event.target.matches('.styledImage')) {
-                    var dropdowns = document.getElementsByClassName("dropDown");
-                    var i;
-                    for (i = 0; i < dropdowns.length; i++) {
-                        var openDropdown = dropdowns[i];
-                        if (openDropdown.style.display == "block") {
-                            openDropdown.style.display = "none";
-                        }
-                    }
-                }
-                if (!event.target.matches('.humberg')) {
-                    var sidebars = document.getElementsByClassName("sidebar");
-                    var i;
-                    for (i = 0; i < sidebars.length; i++) {
-                        var abc = sidebars[i];
-                        if (abc.style.display == "block") {
-                            abc.style.display = "none";
-                        }
-                    }
-                }
-            }
-        </script>
+        <script src="./js/dropdown.js"></script>
 
     </div>
     <nav class="sidebar" id="sidebar">
-        <a href="#" style="background-color: white;"><i class="fa fa-home"></i> Home</a>
+        <a href="dashboard.html" style="background-color: white;"><i class="fa fa-home"></i> Dashboard </a>
         <a href="faq.html"><i class="fa fa-envelope"></i> Messages</a>
-        <a href="news_article.html"><i class="fa fa-newspaper-o"></i> Articles</a>
-        <a href="comments.html"><i class="fa fa-comments-o"></i> Comments</a>
-        <a href=""><i class="fa fa-user-circle-o"></i> Users</a>
+        <a href="news_article.html"><i class="fa fa-newspaper-o"></i> Blogs</a>
+        <a href="addPost.html"><i class="fa fa-plus"></i> Add Blog</a>
         <a href="#"><i class="fa fa-bar-chart"></i> Analytics</a>
-        <a href="#"> <i class="fa fa-gear"></i> Account Settings</a>
+        <a href="#"> <i class="fa fa-gear"></i> User Account</a>
     </nav>
     <div class="dashboard">
         <div class="animationP">
@@ -95,7 +63,7 @@
             <div id="dashCard" style="color:#3299F9;border-color:#3299F9">
                 <i class="fa fa-envelope"></i>
                 <h2>2</h2>
-                <span>New messages</span>
+                <span class="totalMessages">New messages</span>
             </div>
             <div id="dashCard" style="color:#EA6767;border-color:#EA6767">
                 <i class="fa fa-edit"></i>
@@ -122,25 +90,106 @@
                 <span>2022: Aimelive nominated as the best developer in the world</span>
             </div>
         </div>
-        <p>Recently Asked Questions: </p>
-        <div class="faqs">
-            <img src="images/avatar.png" height="50px" width="50px" style="float: left;position: relative;top:10px">
-            <p style="color: #3299F9;"><b><u>Bwiza Claire</u></b> (nyiramwizaclaire456@gmail.com)</p>
-            <p>Hi, @aimelive, How are you doing? Please tell me the price for commercial website, sure.</p>
-            <button id="ans"><i class="fa fa-reply"></i> Answer</button>
-            <button id="ign"><i class="fa fa-trash"></i> Ignore</button>
+
+        <div id="myModal" class="showModal">
+            <div class="modalContent">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <img src="Rectangle 21.png" />
+                <h2> Delete Message </h2>
+                <p>Are you sure do you want to delete this message? <br> 👇 </p>
+                <div class="messageBox">
+                    <span class="com-o"> <i class="fa fa-comments-o"></i> </span> <span class="com-o" style="float: right;"> <i class="fa fa-comments-o"></i> </span>
+                    <p class="divMessage"> Hey Aime, I love you so much!!! Hey Aime, I love you so much!!! Hey Aime, I love you so much!!! Hey Aime, I love you so much!!! Hey Aime, I love you so much!!!</p>
+                    <span class="com-o"> <i class="fa fa-comments-o"></i> </span> <span class="com-o" style="float: right;"> <i class="fa fa-comments-o"></i> </span>
+                </div>
+                <p> <span class="divName"> NIYONSHUTI Frederick </span> ( <a href="#"><span class="divEmail">niyonshutipatricie@gmail.com </span></a>) </p>
+                <div class="clearfix">
+                    <button type="button" class="replybtn" style="background-color: #3299F9;">Reply</button>
+                    <button type="button" class="cancelbtn" onclick="closeModal()">Cancel</button>
+                    <button type="button" class="deletebtn">Delete</button>
+                </div>
+            </div>
+
 
         </div>
-        <div class="faqs">
-            <img src="images/avatar.png" height="50px" width="50px" style="float: left;position: relative;top:10px">
-            <p style="color: #3299F9;"><b><u>MIZERO Christian </u></b> (mizerochris@gmail.com)</p>
-            <p>Hello Aime! I need an awesome portfolio website for my biography before this March, can you? I will give 200$ if found that it is very interactive, awesome and attractive.</p>
-            <button id="ans"><i class="fa fa-reply"></i> Answer</button>
-            <button id="ign"><i class="fa fa-trash"></i> Ignore</button>
 
-        </div>
-        <p style="color: #3299F9;text-align: center;text-decoration: underline;"> Load more...</p>
+
+
+        <p>Recent Queries (5) </p>
+        <div id="getM"></div>
+
+        <a href="faq.html" class="href">
+            <p style="color: #3299F9;text-align: center;text-decoration: underline;"> Load more...</p>
+        </a>
+
     </div>
+    <script>
+        let status;
+        let token = localStorage.getItem('token')
+
+        window.onload = async(e) => {
+            try {
+                const resp = await fetch('https://my-brand-aimelive.herokuapp.com/api/v1/messages', {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': token,
+                    }
+                })
+
+                const data = await resp.json()
+                    //console.log(resp)
+                if (resp.status == 200) {
+                    document.querySelector(".totalMessages").innerHTML = data.Data.messages.length;
+
+                    for (let i = 0; i < 5; i++) {
+                        const dataMessage = data.Data.messages[i];
+                        //console.log(dataMessage.email)
+                        const msgID = dataMessage._id;
+                        const name = dataMessage.name;
+                        const email = dataMessage.email;
+                        const message = dataMessage.message;
+                        const date = dataMessage.creationDate;
+                        getMessage(name, email, message, msgID, date)
+
+                    }
+                    //console.log(data.Data.messages[10].email)
+                }
+                if (resp.status == 500 || resp.status == 400 || resp.status == 401 || resp.status == 404) {
+                    console.log(data.Message)
+                    swal({
+                        title: `Status: ${data.Status} `,
+                        text: data.Message,
+                        icon: 'error'
+                    }).then((u) => {
+                        if (u) {
+                            history.back()
+                        }
+                    })
+                }
+
+
+                function getMessage(name, email, message, msgID, date) {
+                    const getM = document.getElementById("getM");
+                    const faqs = document.createElement("div");
+                    faqs.classList.add("faqs");
+                    const container = `<img src="images/avatar.png" height="50px" width="50px" style="float: left;position: relative;top:10px">
+    <p style="color: #3299F9;"><b><u>${name}</u></b> (${email})</p>
+    <p>${message}</p>
+    <button id="ans"><i class="fa fa-reply"></i> Answer</button>
+    <button id="ign" class="${msgID}" onclick="showModal('${msgID}','${message}','${name}','${email}')"><i class="fa fa-trash"></i> Ignore</button>`
+                    faqs.innerHTML = container;
+                    getM.appendChild(faqs);
+                }
+
+            } catch (error) {
+                console.log("AN ERROR OCCURED HERE!!" + error)
+            }
+
+        }
+    </script>
+    <script src="./js/deleteMessage.js"></script>
     <script src="js/logout.js"></script>
 </body>
 

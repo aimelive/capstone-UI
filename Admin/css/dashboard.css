@@ -31,9 +31,9 @@
             }
             
             body .header #styledCard {
+                float: right;
                 position: relative;
                 display: inline-block;
-                float: right;
             }
             
             body .header #styledCard #styledImage {
@@ -52,7 +52,7 @@
                 display: none;
                 position: absolute;
                 background-color: #f1f1f1;
-                min-width: 180px;
+                min-width: 190px;
                 box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
                 z-index: 100;
                 right: 0;
@@ -63,6 +63,7 @@
                 padding: 12px 16px;
                 text-decoration: none;
                 display: block;
+                cursor: pointer;
             }
             
             body .header #styledCard #dropDownList a:hover {
@@ -95,7 +96,6 @@
                 position: fixed;
                 top: -15px;
                 background-color: lightgray;
-                text-align: center;
             }
             
             body .sidebar a {
@@ -105,6 +105,10 @@
                 display: block;
                 font-size: 20px;
                 box-shadow: 0px 2px 4px -2px rgba(0, 0, 0, 0.3);
+            }
+            
+            body .sidebar a .fa {
+                padding: 0 10px;
             }
             
             body .sidebar a:hover {
@@ -183,6 +187,18 @@
                 width: 100%;
                 height: 250px;
                 border-radius: 12px 12px 0px 0px;
+            }
+            
+            body .dashboard .footerQuery {
+                margin: auto;
+                text-align: center;
+            }
+            
+            body .dashboard .footerQuery a {
+                padding: 0 15px;
+                display: inline-block;
+                text-decoration: underline;
+                cursor: pointer;
             }
             
             body .faqs p {
@@ -583,5 +599,116 @@
                 }
                 body .showModal .modalContent {
                     width: 50%;
+                }
+            }
+            /* about preloader */
+            
+            .preloader {
+                width: 100%;
+                height: 100%;
+                background-color: #fff;
+                position: fixed;
+                z-index: 56789654;
+                top: 0;
+                right: 0;
+                padding-top: 350px;
+                transition: 1s;
+            }
+            
+            .sk-chase {
+                width: 40px;
+                height: 40px;
+                position: relative;
+                animation: sk-chase 2.5s infinite linear both;
+                margin: auto;
+            }
+            
+            .sk-chase-dot {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                left: 0;
+                top: 0;
+                animation: sk-chase-dot 2.0s infinite ease-in-out both;
+            }
+            
+            .sk-chase-dot:before {
+                content: '';
+                display: block;
+                width: 25%;
+                height: 25%;
+                background-color: #ECB22E;
+                border-radius: 100%;
+                animation: sk-chase-dot-before 2.0s infinite ease-in-out both;
+            }
+            
+            .sk-chase-dot:nth-child(1) {
+                animation-delay: -1.1s;
+            }
+            
+            .sk-chase-dot:nth-child(2) {
+                animation-delay: -1.0s;
+            }
+            
+            .sk-chase-dot:nth-child(3) {
+                animation-delay: -0.9s;
+            }
+            
+            .sk-chase-dot:nth-child(4) {
+                animation-delay: -0.8s;
+            }
+            
+            .sk-chase-dot:nth-child(5) {
+                animation-delay: -0.7s;
+            }
+            
+            .sk-chase-dot:nth-child(6) {
+                animation-delay: -0.6s;
+            }
+            
+            .sk-chase-dot:nth-child(1):before {
+                animation-delay: -1.1s;
+            }
+            
+            .sk-chase-dot:nth-child(2):before {
+                animation-delay: -1.0s;
+            }
+            
+            .sk-chase-dot:nth-child(3):before {
+                animation-delay: -0.9s;
+            }
+            
+            .sk-chase-dot:nth-child(4):before {
+                animation-delay: -0.8s;
+            }
+            
+            .sk-chase-dot:nth-child(5):before {
+                animation-delay: -0.7s;
+            }
+            
+            .sk-chase-dot:nth-child(6):before {
+                animation-delay: -0.6s;
+            }
+            
+            @keyframes sk-chase {
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+            
+            @keyframes sk-chase-dot {
+                80%,
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+            
+            @keyframes sk-chase-dot-before {
+                50% {
+                    transform: scale(0.4);
+                }
+                100%,
+                0% {
+                    transform: scale(1.0);
                 }
             }

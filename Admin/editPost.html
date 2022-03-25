@@ -26,7 +26,16 @@
 </head>
 
 <body>
-
+    <div class="preloader">
+        <div class="sk-chase">
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+        </div>
+    </div>
     <div class="header">
 
         <label id="logo_text">AimeLive</label>
@@ -36,19 +45,19 @@
                 <a href="#"><i class="fa fa-user"></i> &nbsp; Profile</a>
                 <a href="#"><i class="fa fa-gear"> </i> &nbsp; Account Settings</a>
                 <a href="#"><i class="fa fa-bar-chart"> </i> &nbsp; Analytics</a>
-                <a href="#"><i class="fa fa-power-off"></i> &nbsp; Log Out</a>
+                <a href="#" onclick="logout()"><i class="fa fa-power-off"></i> &nbsp; Log Out</a>
             </div>
 
         </div>
         <script src="./js/dropdown.js"></script>
     </div>
     <nav class="sidebar">
-        <a href="dashboard.html"><i class="fa fa-home"></i> Home</a>
+        <a href="dashboard.html"><i class="fa fa-home"></i> Dashboard </a>
         <a href="faq.html"><i class="fa fa-envelope"></i> Messages</a>
-        <a href="#" style="background-color: white;"><i class="fa fa-newspaper-o"></i> Articles</a>
-        <a href="comments.html"><i class="fa fa-comments-o"></i> Comments</a>
+        <a href="news_article.html" style="background-color: white;"><i class="fa fa-newspaper-o"></i> Blogs</a>
+        <a href="addPost.html"><i class="fa fa-plus"></i> Add Blog</a>
         <a href="#"><i class="fa fa-bar-chart"></i> Analytics</a>
-        <a href="#"> <i class="fa fa-gear"></i> Account Settings</a>
+        <a href="#"> <i class="fa fa-gear"></i> User Account</a>
     </nav>
 
     <div class="dashboard">
@@ -151,12 +160,8 @@
                     document.getElementById("title").value = data.Content.blog.title;
                     document.getElementById("category").value = data.Content.blog.category;
                     document.getElementById("blogPreview").value = data.Content.blog.preview;
-
-                    blog2.value = data.Content.blog.body;
-
-                    //CKEDITOR.instances.blog.getData() = data.Content.blog.body
-                    //CKEDITOR.instances['blog2'].setData(data.Content.blog.body)
-
+                    //blog2.value = data.Content.blog.body;
+                    CKEDITOR.instances['blog2'].setData(data.Content.blog.body)
                     const image = document.getElementById("outputImage");
                     image.setAttribute("src", data.Content.blog.imgURL);
 
@@ -170,6 +175,7 @@
 
             })
     </script>
+    <script src="js/logout.js"></script>
 </body>
 
 </html>

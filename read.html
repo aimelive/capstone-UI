@@ -8,7 +8,7 @@
     <meta name="keywords" content="Aimelive, Biography, Awesome websites">
     <meta name="author" content="Aime Ndayambaje">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="titleBar"></title>
+    <title id="titleBar">🎉🪄 Aimelive - Blog Posts</title>
     <link rel="icon" href="images/Rectangle 21.png" type="image/x-icon">
     <link rel="stylesheet" href="css/blog.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -38,10 +38,10 @@
         <nav class="mobileNav" id="mobileNav">
 
             <i style="font-size:24px" class="fa" id="closeNav"><span onclick="closeNav()">&#xf00d;</span></i>
-            <a href="#">Home</a>
-            <a href="#">News</a>
-            <a href="#">About</a>
-            <a href="#">Contacts</a>
+            <a href="index.html">Home</a>
+            <a href="blog.html">News</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contacts</a>
             <a onclick="login_out()" id="admin_login">Login</a>
 
 
@@ -74,7 +74,7 @@
 
 
                 <div class="cardimg story">
-                    <img id="photo" />
+                    <img id="photo" class="featured-photo" />
 
                     <p class="title" id="title"></p>
 
@@ -120,7 +120,7 @@
             <div class="card">
                 <h2>About Me</h2>
                 <img src="images/IMG-20220113-WA0012-modified.png" class="cardimg" />
-                <p>Freelance Developer - Web Specialist - IT Proffesional - Software Management</p>
+                <p>Freelance Developer - Web Specialist - IT Proffesional - Software Engineering</p>
             </div>
             <div class="card">
                 <h3>Popular Post</h3>
@@ -240,7 +240,7 @@
             })
 
             const user = await response.json()
-            console.log("WHY CAN'T I GET THE USER INFO " + user)
+                //console.log("WHY CAN'T I GET THE USER INFO " + user)
             if (response.status == 200) {
                 comment.yourName.value = user.Data.name
                 comment.yourName.disabled = true

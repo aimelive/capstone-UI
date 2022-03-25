@@ -18,6 +18,8 @@
 </head>
 
 <body>
+
+
     <div class="header">
         <label id="logo_text">AimeLive</label>
         <div id="styledCard">
@@ -26,19 +28,19 @@
                 <a href="#"><i class="fa fa-user"></i> &nbsp; Profile</a>
                 <a href="#"><i class="fa fa-gear"> </i> &nbsp; Account Settings</a>
                 <a href="#"><i class="fa fa-bar-chart"> </i> &nbsp; Analytics</a>
-                <a href="#"><i class="fa fa-power-off"></i> &nbsp; Log Out</a>
+                <a href="#" onclick="logout()"><i class="fa fa-power-off"></i> &nbsp; Log Out</a>
             </div>
 
         </div>
         <script src="./js/dropdown.js"></script>
     </div>
     <nav class="sidebar">
-        <a href="dashboard.html"><i class="fa fa-home"></i> Home</a>
-        <a href="#" style="background-color: white;"><i class="fa fa-envelope"></i> Messages</a>
-        <a href="news_article.html"><i class="fa fa-newspaper-o"></i> Articles</a>
-        <a href="comments.html"><i class="fa fa-comments-o"></i> Comments</a>
+        <a href="dashboard.html"><i class="fa fa-home"></i> Dashboard </a>
+        <a href="faq.html" style="background-color: white;"><i class="fa fa-envelope"></i> Messages</a>
+        <a href="news_article.html"><i class="fa fa-newspaper-o"></i> Blogs</a>
+        <a href="addPost.html"><i class="fa fa-plus"></i> Add Blog</a>
         <a href="#"><i class="fa fa-bar-chart"></i> Analytics</a>
-        <a href="#"> <i class="fa fa-gear"></i> Account Settings</a>
+        <a href="#"> <i class="fa fa-gear"></i> User Account</a>
     </nav>
     <script src="./js/getAllMessages.js"></script>
 
@@ -64,77 +66,8 @@
 
     </div>
 
-    <script>
-        let messageId;
-        var modal = document.querySelector(".showModal")
-        var divEmail = document.querySelector(".divEmail")
-        var divName = document.querySelector(".divName")
-        var divMessage = document.querySelector(".divMessage")
-        var deletebtn = document.querySelector(".deletebtn")
+    <script src="./js/deleteMessage.js"></script>
 
-        function showModal(msgId, message, name, email) {
-            messageId = msgId
-            divEmail.innerHTML = email
-            divName.innerHTML = name
-            divMessage.innerHTML = message
-            modal.style.display = "block"
-
-
-        }
-
-
-        // function deleteComment() {
-        //     console.log(messageId)
-
-        // }
-        deletebtn.addEventListener('click', async(e) => {
-            e.preventDefault()
-            console.log(messageId)
-            try {
-                const resp = await fetch('https://my-brand-aimelive.herokuapp.com/api/v1/messages/' + messageId, {
-                    method: 'DELETE',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        'Authorization': token
-                    },
-                })
-
-                const data = await resp.json()
-                    //console.log(resp)
-                if (resp.status == 202) {
-                    swal('success', data.Message, 'success').then(() => {
-                        location.reload()
-
-                    })
-
-                }
-                //const data = await resp.json()
-
-                if (resp.status == 404) {
-                    swal('error', data.Message, 'error')
-                }
-                if (resp.status == 400) {
-                    swal('error', data.Message, 'error')
-                }
-
-
-
-            } catch (error) {
-                console.log("AN ERROR OCCURED HERE IN THIS CATCH " + error)
-            }
-
-        })
-
-        function closeModal() {
-            modal.style.display = "none"
-        }
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
     <div class="dashboard">
         <h1>Overview </h1>
         <div id="overviewCard">
@@ -159,16 +92,17 @@
                 <span>Unanswered </span>
             </div>
         </div>
-        <h1>Recently Messages </h1>
+        <h1>Recent Messages </h1>
 
         <div id="getM">
 
         </div>
-        <center>
-            <a style="color: #3299F9;text-decoration: underline;cursor: pointer;"> View answered queries </a>&nbsp;&nbsp;&nbsp;
-            <a style="color: #EA6767;text-decoration: underline; cursor: pointer;"> View unanswered queries </a>
-        </center>
+        <div class="footerQuery">
+            <a href="#" style="color: #3299F9;"> Answered Queries </a>
+            <a href="#" style="color: #EA6767;"> Unanswered Queries </a>
+        </div>
     </div>
+    <script src="js/logout.js"></script>
 </body>
 
 </html>
