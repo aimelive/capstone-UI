@@ -110,14 +110,14 @@
                 const data = await resp.json()
                 console.log(data)
                 if (resp.status == 201) {
-                    swal('success', data.Message, 'success').then(() => {
+                    swal('Success', data.Message, 'success').then(() => {
                         location.href = 'login.html'
                     })
 
                 }
 
                 if (resp.status == 400) {
-                    swal('error', data.Error, 'error')
+                    swal('Error', data.Error, 'error')
                 }
 
 

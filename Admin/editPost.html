@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Add Post - Aimelive </title>
+    <title>Edit Post - Aimelive </title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <meta name="description" content="Aimelive | Freelance Developer | Official Biography website">
@@ -13,16 +13,15 @@
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="./js/script.js"></script>
-
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <!--Summernote Editor-->
-
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script>
+        const searchID = location.search.substring(1);
+        if (!searchID) {
+            location.href = 'news_article.html'
+        }
+    </script>
+    <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
 
 </head>
 
@@ -56,15 +55,15 @@
         <div class="addPost">
             <center>
                 <img src="../images/images.png" width="50px" style="border-radius: 50%;" />
-                <h1>Add Post <span style="color: #ECB22E;">@Aimelive</span> here </h1>
+                <h1>Edit Post <span style="color: #ECB22E;">@Aimelive</span> here </h1>
             </center>
-            <form method="post" class="add-post-to-database" id="addPostFirebase" novalidate>
+            <form method="post" class="edit-post-to-database">
                 <div class="row">
                     <div class="labelClass">
                         <label for="title">Enter a title: </label>
                     </div>
                     <div class="inputClass">
-                        <input type="text" name="title" placeholder="Blog title.." required>
+                        <input type="text" id="title" name="title" placeholder="Blog title.." required>
                     </div>
                 </div>
                 <div class="row">
@@ -86,7 +85,7 @@
                         <label for="Preview">Write a preview: </label>
                     </div>
                     <div class="inputClass">
-                        <textarea name="preview" placeholder="Write a blog preview" style="resize: none;height: 200px;" required></textarea>
+                        <textarea name="preview" id="blogPreview" placeholder="Write a blog preview" style="resize: none;height: 200px;font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;" required></textarea>
                     </div>
                 </div>
                 <div class="row">
@@ -95,11 +94,15 @@
                     </div>
 
                     <div class="inputClass">
-                        <textarea name="blog" id="summernote" placeholder="Write a blog..." required></textarea>
+                        <textarea name="blog" placeholder="Write a blog..." class="blogBody" required>
+                        </textarea>
+                        <script>
+                            CKEDITOR.replace('blog');
+                        </script>
 
                     </div>
                 </div>
-                <div class="row" id="imagePreview">
+                <div class="row" id="imagePreview" style="display: block;">
                     <div class="labelClass">
                         <label for="image">Image Preview: </label>
                     </div>
@@ -115,18 +118,58 @@
                         <input type="file" name="image" onchange="previewFile()" style="resize: none;" id="inputFile" accept="image/*">
                     </div>
                 </div>
+
                 <br>
                 <div class="row">
-                    <!-- <input type="reset" value="Clear">
-                    <input type="button" value="Save"> -->
                     <input type="submit" value="Post">
                 </div>
             </form>
-            <script src="./js/addPost.js">
+
+
+            <script src="./js/editPost.js">
             </script>
         </div>
 
     </div>
+
+
+    <script>
+        let status;
+
+        const blog2 = document.querySelector(".blogBody")
+        const url = `https://my-brand-aimelive.herokuapp.com/api/v1/blogs/${searchID}`
+            //console.log(url);
+        fetch(url)
+            .then((response) => {
+                status = response.status
+                return response.json();
+            })
+            .then((data) => {
+
+                if (status == 200) {
+
+                    document.getElementById("title").value = data.Content.blog.title;
+                    document.getElementById("category").value = data.Content.blog.category;
+                    document.getElementById("blogPreview").value = data.Content.blog.preview;
+
+                    blog2.value = data.Content.blog.body;
+
+                    //CKEDITOR.instances.blog.getData() = data.Content.blog.body
+                    //CKEDITOR.instances['blog2'].setData(data.Content.blog.body)
+
+                    const image = document.getElementById("outputImage");
+                    image.setAttribute("src", data.Content.blog.imgURL);
+
+                }
+                if (status == 404) {
+                    //console.log("Blog not found!!!")
+                    swal('error', '(404) ' + data.Error, 'error').then(() => {
+                        location.href = 'news_article.html'
+                    })
+                }
+
+            })
+    </script>
 </body>
 
 </html>

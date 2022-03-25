@@ -43,7 +43,7 @@ function getBlogs(i, postId, blogTitle, blogPhoto, uploadDate, blogCategory, blo
         <td>${noComment} </td>
         <td>${date}</td>
         <td>${st} </td>
-        <td id="actions"><a href="?${postId}" style="color:grey;cursor:pointer"><i class="fa fa-pencil"></i></a>
+        <td id="actions"><a href="editPost.html?${postId}" style="color:grey;cursor:pointer"><i class="fa fa-pencil"></i></a>
         <a style="color:red;cursor:pointer" onclick="deleteBlog('${postId}')"> <i class="fa fa-trash-o"></i></a>
         <a style="color:#3299F9;cursor:pointer" onclick="commento('${postId}','${noComment}','${blogTitle}')"> <i class="fa fa-comments-o"></i></a>
         </td>`

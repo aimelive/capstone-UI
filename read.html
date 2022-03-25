@@ -48,6 +48,18 @@
 
         </nav>
     </div>
+
+    <div class="preloader">
+        <div class="sk-chase">
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+        </div>
+    </div>
+
     <div class="header">
         <span>Aimelive - Blog Posts 🎉🪄  </span>
     </div>
@@ -198,14 +210,11 @@
                         displayComment(id, username, Comment, dateC);
                     }
 
-
+                    document.querySelector(".preloader").style.display = "none"
 
                 }
                 if (status == 404) {
-                    //console.log("Blog not found!!!")
-                    swal('error', '(404) ' + data.Error, 'error').then(() => {
-                        location.href = 'blog.html'
-                    })
+                    location.href = 'blog.html'
                 }
 
             })
