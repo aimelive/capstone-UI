@@ -40,7 +40,11 @@ form.addEventListener('submit', async(e) => {
             }
 
             if (resp.status == 404) {
-                swal('Oops!', data.Oops, 'error')
+                swal(data.Message, data.Oops, 'error')
+            }
+
+            if (resp.status == 500) {
+                swal('Oops!', data.Message, 'error')
             }
         } else {
 
