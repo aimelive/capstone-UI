@@ -10,7 +10,7 @@ form.addEventListener('submit', async(e) => {
     const body = CKEDITOR.instances.blog.getData()
     const image = form.image.files[0]
 
-    console.log(body)
+    //console.log(body)
 
     try {
 

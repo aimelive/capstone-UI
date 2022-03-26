@@ -152,7 +152,7 @@
                     document.getElementById("category").value = data.Content.blog.category;
                     document.getElementById("blogPreview").value = data.Content.blog.preview;
                     //blog2.value = data.Content.blog.body;
-                    CKEDITOR.instances['blog2'].setData(data.Content.blog.body)
+                    CKEDITOR.instances['blog'].setData(data.Content.blog.body)
                     const image = document.getElementById("outputImage");
                     image.setAttribute("src", data.Content.blog.imgURL);
 
